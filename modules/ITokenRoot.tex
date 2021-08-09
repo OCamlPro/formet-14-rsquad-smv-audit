@@ -1,0 +1,44 @@
+
+\section{Module "ITokenRoot.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.42.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Interface ITokenRoot}
+
+\minitoc
+
+In file {\tt ITokenRoot.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=4]
+    function deployEmptyWallet(
+        uint32 _answer_id,
+        int8 workchain_id,
+        uint256 pubkey,
+        uint256 internal_owner,
+        uint128 grams
+    ) external functionID(0xD);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=12]
+    function getWalletAddress(
+        int8 workchain_id,
+        uint256 pubkey,
+        uint256 owner_std_addr
+    ) external functionID(0x17) returns (address value0);
+\end{lstlisting}

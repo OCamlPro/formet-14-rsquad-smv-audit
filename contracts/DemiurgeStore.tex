@@ -1,0 +1,137 @@
+
+\chapter{Contract DemiurgeStore}
+
+\minitoc
+
+In file {\tt DemiurgeStore.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+\end{tabular}
+
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+mapping (uint8 =$>$ address) & \_{}addrs &  \\\hline
+ & & assigned in @4.DemiurgeStore.setTokenRootAddr\\\hline
+ & & used in @4.DemiurgeStore.setTokenRootAddr\\\hline
+ & & assigned in @4.DemiurgeStore.setFaucetAddr\\\hline
+ & & used in @4.DemiurgeStore.setFaucetAddr\\\hline
+ & & assigned in @4.DemiurgeStore.setDensRootAddr\\\hline
+ & & used in @4.DemiurgeStore.setDensRootAddr\\\hline
+ & & used in @4.DemiurgeStore.queryAddr\\\hline
+mapping (uint8 =$>$ TvmCell) & \_{}codes &  \\\hline
+ & & assigned in @4.DemiurgeStore.setProposalCode\\\hline
+ & & used in @4.DemiurgeStore.setProposalCode\\\hline
+ & & assigned in @4.DemiurgeStore.setPadawanCode\\\hline
+ & & used in @4.DemiurgeStore.setPadawanCode\\\hline
+ & & used in @4.DemiurgeStore.queryCode\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=11]
+    mapping(uint8 => address) public _addrs;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=12]
+    mapping(uint8 => TvmCell) public _codes;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function queryAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=43]
+    function queryAddr(ContractAddr kind) public view {
+        address addr = _addrs[uint8(kind)];
+        IDemiurgeStoreCb(msg.sender).updateAddr{value: 0, flag: 64, bounce: false}(kind, addr);
+    }
+\end{lstlisting}
+
+\subsection{Function queryCode}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=38]
+    function queryCode(ContractType kind) public view {
+        TvmCell code = _codes[uint8(kind)];
+        IDemiurgeStoreCb(msg.sender).updateCode{value: 0, flag: 64, bounce: false}(kind, code);
+    }
+\end{lstlisting}
+
+\subsection{Function setDensRootAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=21]
+    function setDensRootAddr(address addr) public signed {
+        require(addr != address(0));
+        _addrs[uint8(ContractAddr.DensRoot)] = addr;
+    }
+\end{lstlisting}
+
+\subsection{Function setFaucetAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=29]
+    function setFaucetAddr(address addr) public signed {
+        require(addr != address(0));
+        _addrs[uint8(ContractAddr.Faucet)] = addr;
+    }
+\end{lstlisting}
+
+\subsection{Function setPadawanCode}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=14]
+    function setPadawanCode(TvmCell code) public signed {
+        _codes[uint8(ContractType.Padawan)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setProposalCode}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=17]
+    function setProposalCode(TvmCell code) public signed {
+        _codes[uint8(ContractType.Proposal)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setTokenRootAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=25]
+    function setTokenRootAddr(address addr) public signed {
+        require(addr != address(0));
+        _addrs[uint8(ContractAddr.TokenRoot)] = addr;
+    }
+\end{lstlisting}

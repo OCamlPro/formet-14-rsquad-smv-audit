@@ -1,0 +1,79 @@
+
+\section{Module "ProposalResolver.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.42.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+../Proposal.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Contract ProposalResolver}
+
+\minitoc
+
+In file {\tt ProposalResolver.sol}
+
+\subsubsection{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+TvmCell & \_{}codeProposal &  \\\hline
+ & & assigned in @1.Demiurge.updateCode\\\hline
+ & & used in @1.Demiurge.updateCode\\\hline
+ & & used in @1.Demiurge.getStored\\\hline
+ & & used in @12.ProposalResolver.\_{}buildProposalState\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=6]
+    TvmCell _codeProposal;
+\end{lstlisting}
+
+\subsubsection{Public Method Definitions}
+
+
+\paragraph{Function resolveProposal}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=8]
+    function resolveProposal(string title) public view returns (address addrProposal) {
+        TvmCell state = _buildProposalState(title);
+        uint256 hashState = tvm.hash(state);
+        addrProposal = address.makeAddrStd(0, hashState);
+    }
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Function \_{}buildProposalState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=14]
+    function _buildProposalState(string title) internal view returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: Proposal,
+            varInit: {_deployer: address(this), _title: title},
+            code: _codeProposal
+        });
+    }
+\end{lstlisting}

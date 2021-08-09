@@ -1,0 +1,102 @@
+
+\section{Module "IPadawan.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.36.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./IProposal.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+\section{MISSING 1 GLOBAL TYPE DEFINITIONS: TODO}
+
+\subsection{Interface IPadawan}
+
+\minitoc
+
+In file {\tt IPadawan.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=14]
+    function confirmVote(uint32 deposit) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=12]
+    function depositTokens() external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=20]
+    function getActiveProposals() external returns (mapping(address => uint32) activeProposals);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=22]
+    function getAll() external view returns (TipAccount tipAccount, uint32 reqVotes, uint32 totalVotes, uint32 lockedVotes);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=19]
+    function getTokenAccounts() external view returns (mapping (address => TipAccount) allAccounts);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=18]
+    function getVoteInfo() external view returns (uint32 reqVotes, uint32 totalVotes, uint32 lockedVotes);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=13]
+    function reclaimDeposit(uint32 votes, address returnTo) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=15]
+    function rejectVote(uint32 deposit, uint16 ec) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=16]
+    function updateStatus(ProposalState state) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=11]
+    function vote(address proposal, bool choice, uint32 votes) external;
+\end{lstlisting}

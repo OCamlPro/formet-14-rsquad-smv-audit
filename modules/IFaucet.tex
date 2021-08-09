@@ -1,0 +1,71 @@
+
+\section{Module "IFaucet.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.42.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IFaucet}
+
+\minitoc
+
+In file {\tt IFaucet.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=6]
+    function changeBalance(uint256 pubkey, uint32 value) external returns (uint32);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=4]
+    function claimTokens(address addrTokenWallet) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=7]
+    function deployWallet() external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=8]
+    function getBalance(uint256 userPubkey) external returns (uint32 balance);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=5]
+    function getTotalDistributed() external;
+\end{lstlisting}
+
+\subsection{Interface IFaucetCb}
+
+\minitoc
+
+In file {\tt IFaucet.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=12]
+    function getTotalDistributedCb(uint128 totalDistributed) external;
+\end{lstlisting}

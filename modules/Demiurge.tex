@@ -1,0 +1,467 @@
+
+\section{Module "Demiurge.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.36.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  time &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./resolvers/PadawanResolver.sol &\\\hline
+./resolvers/ProposalResolver.sol &\\\hline
+./Proposal.sol &\\\hline
+./DemiurgeStore.sol &\\\hline
+./interfaces/IProposal.sol &\\\hline
+./interfaces/IClient.sol &\\\hline
+./interfaces/IFaucet.sol &\\\hline
+./interfaces/IDemiurge.sol &\\\hline
+./Glossary.sol &\\\hline
+./Errors.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+\section{MISSING 1 GLOBAL TYPE DEFINITIONS: TODO}
+
+\subsection{Contract Demiurge}
+
+\minitoc
+
+In file {\tt Demiurge.sol}
+
+\subsubsection{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+PadawanResolver & \\\hline
+ProposalResolver & \\\hline
+IDemiurgeStoreCb & \\\hline
+IFaucetCb & \\\hline
+\end{tabular}
+
+
+\subsubsection{Constant Definitions}
+
+
+\begin{lstlisting}[firstnumber=30]
+    uint8 constant CHECK_PROPOSAL = 1;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=31]
+    uint8 constant CHECK_PADAWAN = 2;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=33]
+    uint128 constant TOTAL_EMISSION = 21000000;
+\end{lstlisting}
+
+\subsubsection{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint32 & \_{}deployedPadawansCounter & Initialized to 0  \\\hline
+ & & used in @1.Demiurge.getStats\\\hline
+uint32 & \_{}deployedProposalsCounter & Initialized to 0  \\\hline
+ & & used in @1.Demiurge.getStats\\\hline
+ & & assigned in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+uint16 & \_{}version & Initialized to 3  \\\hline
+ & & used in @1.Demiurge.getStats\\\hline
+address & \_{}addrStore &  \\\hline
+ & & used in @1.Demiurge.getStored\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+ & & assigned in @1.Demiurge.:constructor\\\hline
+ & & used in @1.Demiurge.:constructor\\\hline
+address & \_{}addrDensRoot &  \\\hline
+ & & assigned in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.getStored\\\hline
+ & & used in @1.Demiurge.deployReserveProposal\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+address & \_{}addrTokenRoot &  \\\hline
+ & & assigned in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.getStored\\\hline
+ & & used in @1.Demiurge.deployPadawan\\\hline
+address & \_{}addrFaucet &  \\\hline
+ & & assigned in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.updateAddr\\\hline
+ & & used in @1.Demiurge.getStored\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+uint8 & \_{}checkList &  \\\hline
+ & & assigned in @1.Demiurge.\_{}passCheck\\\hline
+ & & used in @1.Demiurge.\_{}passCheck\\\hline
+ & & assigned in @1.Demiurge.\_{}createChecks\\\hline
+ & & used in @1.Demiurge.\_{}createChecks\\\hline
+ & & used in @1.Demiurge.\_{}allCheckPassed\\\hline
+NewProposal [] & \_{}newProposals &  \\\hline
+ & & used in @1.Demiurge.deployReserveProposal\\\hline
+ & & used in @1.Demiurge.deployReserveProposal\\\hline
+ & & assigned in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+uint8 & \_{}getBalancePendings & Initialized to 0  \\\hline
+ & & assigned in @1.Demiurge.getTotalDistributedCb\\\hline
+ & & used in @1.Demiurge.getTotalDistributedCb\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+ & & assigned in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+ & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
+uint128 & \_{}totalVotes & Initialized to 0  \\\hline
+ & & assigned in @1.Demiurge.getTotalDistributedCb\\\hline
+ & & used in @1.Demiurge.getTotalDistributedCb\\\hline
+ & & used in @1.Demiurge.\_{}deployProposals\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=35]
+    uint32 _deployedPadawansCounter = 0;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=36]
+    uint32 _deployedProposalsCounter = 0;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=37]
+    uint16 _version = 3;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=39]
+    address _addrStore;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=40]
+    address _addrDensRoot;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=41]
+    address _addrTokenRoot;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=42]
+    address _addrFaucet;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=44]
+    uint8 _checkList;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=46]
+    NewProposal[] public _newProposals;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=47]
+    uint8 public _getBalancePendings = 0;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=48]
+    uint128 public _totalVotes = 0;
+\end{lstlisting}
+
+\subsubsection{Modifier Definitions}
+
+
+\paragraph{Modifier checksEmpty}
+
+
+\begin{lstlisting}[firstnumber=66]
+    modifier checksEmpty() {
+        require(_allCheckPassed(), Errors.NOT_ALL_CHECKS_PASSED);
+        tvm.accept();
+        _;
+    }
+\end{lstlisting}
+
+\paragraph{Modifier onlyStore}
+
+
+\begin{lstlisting}[firstnumber=72]
+    modifier onlyStore() {
+        require(msg.sender == _addrStore);
+        tvm.accept();
+        _;
+    }
+\end{lstlisting}
+
+\subsubsection{Constructor Definitions}
+
+
+\paragraph{Constructor}
+
+\issueCritical{Constructor for Demiurge (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=82]
+    constructor(address addrStore) public {
+        if (msg.sender == address(0)) {
+            require(msg.pubkey() == tvm.pubkey(), 101);
+        }
+        require(addrStore != address(0), Errors.STORE_SHOULD_BE_NOT_NULL);
+        tvm.accept();
+        
+        if (addrStore != address(0)) {
+            _addrStore = addrStore;
+            DemiurgeStore(_addrStore).queryCode{value: 0.2 ton, bounce: true}(ContractType.Proposal);
+            DemiurgeStore(_addrStore).queryCode{value: 0.2 ton, bounce: true}(ContractType.Padawan);
+            DemiurgeStore(_addrStore).queryAddr{value: 0.2 ton, bounce: true}(ContractAddr.DensRoot);
+            DemiurgeStore(_addrStore).queryAddr{value: 0.2 ton, bounce: true}(ContractAddr.TokenRoot);
+            DemiurgeStore(_addrStore).queryAddr{value: 0.2 ton, bounce: true}(ContractAddr.Faucet);
+        }
+
+        _createChecks();
+    }
+\end{lstlisting}
+
+\subsubsection{Public Method Definitions}
+
+
+\paragraph{Function deployPadawan}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=103]
+    function deployPadawan(address owner) external onlyContract {
+        require(msg.value >= DEPLOY_FEE + 2 ton);
+        require(owner != address(0));
+        TvmCell state = _buildPadawanState(owner);
+        new Padawan{stateInit: state, value: START_BALANCE + 2 ton}(_addrTokenRoot);
+    }
+\end{lstlisting}
+
+\paragraph{Function deployReserveProposal}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=112]
+    function deployReserveProposal(
+        string title,
+        ReserveProposalSpecific specific
+    ) external onlyContract {
+        require(msg.value >= DEPLOY_PROPOSAL_FEE);
+        TvmBuilder b;
+        b.store(specific);
+        TvmCell cellSpecific = b.toCell();
+
+        NewProposal _newProposal = NewProposal(
+            0,
+            _addrDensRoot,
+            ProposalType.Reserve,
+            cellSpecific,
+            _codePadawan,
+            _buildProposalState(title)
+        );
+        _newProposals.push(_newProposal);
+        
+        _beforeProposalDeploy(uint8(_newProposals.length - 1));
+    }
+\end{lstlisting}
+
+\paragraph{Function getStats}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=214]
+    function getStats() public view returns (uint16 version, uint32 deployedPadawansCounter, uint32 deployedProposalsCounter) {
+        version = _version;
+        deployedPadawansCounter = _deployedPadawansCounter;
+        deployedProposalsCounter = _deployedProposalsCounter;
+    }
+\end{lstlisting}
+
+\paragraph{Function getStored}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=198]
+    function getStored() public view returns (
+        TvmCell codePadawan,
+        TvmCell codeProposal,
+        address addrStore,
+        address addrDensRoot,
+        address addrTokenRoot,
+        address addrFaucet
+    ) {
+        codePadawan = _codePadawan;
+        codeProposal = _codeProposal;
+        addrStore = _addrStore;
+        addrDensRoot = _addrDensRoot;
+        addrTokenRoot = _addrTokenRoot;
+        addrFaucet = _addrFaucet;
+    }
+\end{lstlisting}
+
+\paragraph{Function getTotalDistributedCb}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=148]
+    function getTotalDistributedCb(
+        uint128 totalDistributed
+    ) public override {
+        _totalVotes = totalDistributed;
+        _getBalancePendings -= 1;
+        _deployProposals();
+    }
+\end{lstlisting}
+
+\paragraph{Function updateAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=174]
+    function updateAddr(ContractAddr kind, address addr) external override onlyStore {
+        require(addr != address(0));
+        if (kind == ContractAddr.DensRoot) {
+            _addrDensRoot = addr;
+        } else if (kind == ContractAddr.TokenRoot) {
+            _addrTokenRoot = addr;
+        } else if (kind == ContractAddr.Faucet) {
+            _addrFaucet = addr;
+        }
+    }
+\end{lstlisting}
+
+\paragraph{Function updateCode}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=185]
+    function updateCode(ContractType kind, TvmCell code) external override onlyStore {
+        tvm.accept();
+        if (kind == ContractType.Proposal) {
+            _codeProposal = code;
+            _passCheck(CHECK_PROPOSAL);
+        } else if (kind == ContractType.Padawan) {
+            _codePadawan = code;
+            _passCheck(CHECK_PADAWAN);
+        }
+    }
+\end{lstlisting}
+
+\subsubsection{Internal Method Definitions}
+
+
+\paragraph{Function \_{}allCheckPassed}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=62]
+    function _allCheckPassed() private view inline returns (bool) {
+        return (_checkList == 0);
+    }
+\end{lstlisting}
+
+\paragraph{Function \_{}beforeProposalDeploy}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=134]
+    function _beforeProposalDeploy(
+        uint8 i
+    ) private {
+        uint256 hashState = tvm.hash(_newProposals[i].state);
+        address addrProposal = address.makeAddrStd(0, hashState);
+        IClient(_addrDensRoot).onProposalDeploy
+            {value: 1 ton, bounce: true}
+            (addrProposal, _newProposals[i].proposalType, _newProposals[i].specific);
+
+        IFaucet(_addrFaucet).getTotalDistributed
+            {value: 0.2 ton, flag: 1, bounce: false}();
+        _getBalancePendings += 1;
+    }
+\end{lstlisting}
+
+\paragraph{Function \_{}createChecks}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=54]
+    function _createChecks() private inline {
+        _checkList = CHECK_PADAWAN | CHECK_PROPOSAL;
+    }
+\end{lstlisting}
+
+\paragraph{Function \_{}deployProposals}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=156]
+    function _deployProposals() private {
+        if(_getBalancePendings == 0) {
+            for(uint8 i = 0; i < _newProposals.length; i++) {
+                new Proposal {stateInit: _newProposals[i].state, value: START_BALANCE}(
+                    _totalVotes,
+                    _newProposals[i].addrClient,
+                    _newProposals[i].proposalType,
+                    _newProposals[i].specific,
+                    _newProposals[i].codePadawan
+                );
+                _deployedProposalsCounter++;
+            }
+            delete _newProposals;
+        }
+    }
+\end{lstlisting}
+
+\paragraph{Function \_{}passCheck}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=58]
+    function _passCheck(uint8 check) private inline {
+        _checkList &= ~check;
+    }
+\end{lstlisting}

@@ -1,0 +1,97 @@
+
+\section{Module "IDemiurge.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.42.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+../Proposal.sol &\\\hline
+../Glossary.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Interface IDemiurge}
+
+\minitoc
+
+In file {\tt IDemiurge.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=7]
+    function deployPadawan(address owner) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=10]
+    function deployReserveProposal(
+        string title,
+        ReserveProposalSpecific specific
+    ) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=16]
+    function getPadawan(uint key) external view returns (PadawanData data);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=15]
+    function getProposalInfo() external view returns (mapping (uint32 => ProposalInfo) proposals);
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=8]
+    function onPadawanDeploy(uint key) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=18]
+    function resolvePadawan(address owner) external view returns (address addrPadawan);
+\end{lstlisting}
+
+\subsection{Interface IDemiurgeStoreCb}
+
+\minitoc
+
+In file {\tt IDemiurge.sol}
+
+\subsubsection{Prototypes Definitions}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=22]
+    function updateAddr(ContractAddr kind, address addr) external;
+\end{lstlisting}
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=23]
+    function updateCode(ContractType kind, TvmCell code) external;
+\end{lstlisting}

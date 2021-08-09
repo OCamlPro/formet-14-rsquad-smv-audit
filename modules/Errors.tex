@@ -1,0 +1,112 @@
+
+\section{Module "Errors.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.37.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Library Errors}
+
+\minitoc
+
+In file {\tt Errors.sol}
+
+\subsubsection{Constant Definitions}
+
+
+\begin{lstlisting}[firstnumber=4]
+    uint16 constant INVALID_CALLER = 101;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=6]
+    uint16 constant ONLY_CONTRACT =                     101;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=7]
+    uint16 constant ID_ALREADY_TAKEN =                  102;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=8]
+    uint16 constant ONLY_DEPLOYER =                     103;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=9]
+    uint16 constant NOT_AUTHORIZED_CONTRACT =           104;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=10]
+    uint32 constant ACCOUNT_DOES_NOT_EXIST =            105;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=11]
+    uint32 constant MSG_VALUE_TOO_LOW =                 106;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=13]
+    uint32 constant STORE_SHOULD_BE_NOT_NULL =          201;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=15]
+    uint16 constant PADAWAN_ALREADY_DEPLOYED =          301;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=16]
+    uint16 constant PROPOSAL_ALREADY_DEPLOYED =         302;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=17]
+    uint16 constant NOT_ALL_CHECKS_PASSED =             303;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=18]
+    uint16 constant INIT_ALREADY_COMPLETED =            304;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=19]
+    uint16 constant END_LOWER_THAT_START =              305;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=20]
+    uint16 constant NOW_LOWER_THAT_START =              306;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=21]
+    uint16 constant BAD_DATES =                         307;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=23]
+    uint16 constant VOTING_NOT_STARTED =                401;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=24]
+    uint16 constant VOTING_HAS_ENDED =                  402;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=25]
+    uint16 constant VOTING_HAS_NOT_ENDED =              403;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=27]
+    uint32 constant NOT_ENOUGH_VOTES =                  500;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=28]
+    uint32 constant DEPOSIT_NOT_FOUND =                 502;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=29]
+    uint32 constant DEPOSIT_WITH_SUCH_ID_EXISTS =       503;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=30]
+    uint32 constant PENDING_DEPOSIT_ALREADY_EXISTS =    504;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=31]
+    uint32 constant NOT_ENOUGH_VALUE_TO_VOTE =          505;
+\end{lstlisting}
