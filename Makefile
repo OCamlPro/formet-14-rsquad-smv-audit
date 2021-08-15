@@ -1,6 +1,6 @@
 
 all: report.pdf
-report.pdf: *.tex
+report.pdf: *.tex contracts/*.tex
 	pdflatex report.tex
 
 clean:

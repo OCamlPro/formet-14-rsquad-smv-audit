@@ -3,25 +3,19 @@
 
 \minitoc
 
+\section{Overview}
+
 In file {\tt PadawanResolver.sol}
+
+This contract is inherited by contracts that need to deploy {\tt
+  Padawan} contract and verify that an address belongs to a deployed
+{\tt Padawan} contract.
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-TvmCell & \_{}codePadawan &  \\\hline
- & & assigned in @1.Demiurge.updateCode\\\hline
- & & used in @1.Demiurge.updateCode\\\hline
- & & used in @1.Demiurge.getStored\\\hline
- & & used in @1.Demiurge.deployReserveProposal\\\hline
- & & used in @3.Proposal.\_{}buildPadawanState\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & used in @11.PadawanResolver.\_{}buildPadawanState\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=8]
     TvmCell _codePadawan;
@@ -33,7 +27,7 @@ TvmCell & \_{}codePadawan &  \\\hline
 \subsection{Function resolvePadawan}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=10]
@@ -49,8 +43,19 @@ TvmCell & \_{}codePadawan &  \\\hline
 
 \subsection{Function \_{}buildPadawanState}
 
+
 \begin{itemize}
-\item TODO
+\item Minor issue: the state built in this function uses {\tt
+  address(this)} as one of the static variables for the contract. Yet,
+  this contract is bound to be inherited by different contracts (here,
+  at least {\tt Demiurge} and {\tt Proposal}), i.e. computed addresses
+  will be different for different contracts. Instead, the value of the
+  {\tt \_deployer} variable should be made explicit to the caller, by
+  passing it as an argument of the function.
+\item Minor issue: this function should fail ({\tt require}) if the
+  {\tt \_codePadawan} variable has not yet been initialized. A global
+  boolean could be used for that, set in an internal function
+  initializing both global variables.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=16]

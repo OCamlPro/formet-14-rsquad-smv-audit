@@ -3,33 +3,19 @@
 
 \minitoc
 
+\section{Overview}
+
 In file {\tt Padawan.sol}
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-\end{tabular}
-
+This contract is used by a user to collect his voting rights (within a
+token wallet), and vote for proposals. Voting rights can be added, and
+reclaimed if not currently used.
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}deployer &  \\\hline
- & & used in @2.Padawan.:constructor\\\hline
-address & \_{}owner &  \\\hline
- & & used in @2.Padawan.vote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.getAddresses\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=18]
     address static _deployer;
@@ -41,83 +27,13 @@ address & \_{}owner &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}addrTokenRoot &  \\\hline
- & & used in @2.Padawan.\_{}createTokenAccount\\\hline
- & & assigned in @2.Padawan.:constructor\\\hline
- & & used in @2.Padawan.:constructor\\\hline
-TipAccount & \_{}tipAccount &  \\\hline
- & & assigned in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & assigned in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.getTipAccount\\\hline
- & & used in @2.Padawan.getAll\\\hline
- & & used in @2.Padawan.depositTokens\\\hline
- & & used in @2.Padawan.depositTokens\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
-address & \_{}returnTo &  \\\hline
- & & assigned in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
-mapping (address =$>$ uint32) & \_{}activeProposals &  \\\hline
- & & assigned in @2.Padawan.vote\\\hline
- & & used in @2.Padawan.vote\\\hline
- & & used in @2.Padawan.vote\\\hline
- & & assigned in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.getActiveProposals\\\hline
- & & assigned in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.\_{}updateLockedVotes\\\hline
- & & used in @2.Padawan.\_{}updateLockedVotes\\\hline
-uint32 & \_{}requestedVotes &  \\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.getVoteInfo\\\hline
- & & used in @2.Padawan.getAll\\\hline
- & & assigned in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
-uint32 & \_{}totalVotes &  \\\hline
- & & used in @2.Padawan.vote\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.onGetBalance\\\hline
- & & used in @2.Padawan.getVoteInfo\\\hline
- & & used in @2.Padawan.getAll\\\hline
- & & assigned in @2.Padawan.\_{}unlockDeposit\\\hline
- & & used in @2.Padawan.\_{}unlockDeposit\\\hline
-uint32 & \_{}lockedVotes &  \\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.getVoteInfo\\\hline
- & & used in @2.Padawan.getAll\\\hline
- & & assigned in @2.Padawan.\_{}updateLockedVotes\\\hline
- & & used in @2.Padawan.\_{}updateLockedVotes\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item Minor issue: there is no function to clean {\tt
+  \_activeProposals}, i.e. to remove proposals that are
+  ended. Currently, it is possible to use {\tt reclaimDeposit} with
+  argument 0 to do that. It would be better to introduce a {\tt
+    cleanProposals} function for that purpose.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=21]
     address _addrTokenRoot;
@@ -152,6 +68,9 @@ uint32 & \_{}lockedVotes &  \\\hline
 
 \subsection{Modifier onlyOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=34]
     modifier onlyOwner() {
@@ -162,6 +81,9 @@ uint32 & \_{}lockedVotes &  \\\hline
 
 \subsection{Modifier onlyTokenRoot}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=39]
     modifier onlyTokenRoot() {
@@ -175,12 +97,8 @@ uint32 & \_{}lockedVotes &  \\\hline
 
 \subsection{Constructor}
 
-\issueCritical{Constructor for Padawan (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-
-loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-loren ipsum loren ipsum loren ipsum }
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=46]
@@ -197,7 +115,12 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function confirmVote}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: there is no real reason to call {\tt
+  \_updateLockedVotes} here, as it could be called in {\tt
+  reclaimDeposit} instead. Indeed, {\tt \_lockedVotes} is only used
+  when the deposit is reclaimed, so it will save the cost of the
+  recomputation if the user votes for many proposals without
+  reclaiming his tokens.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=74]
@@ -217,7 +140,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function depositTokens}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=172]
@@ -234,7 +157,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getActiveProposals}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=228]
@@ -246,7 +169,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getAddresses}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=224]
@@ -258,7 +181,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getAll}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=207]
@@ -273,7 +196,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getTipAccount}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=214]
@@ -285,7 +208,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getVoteInfo}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=218]
@@ -299,7 +222,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function onGetBalance}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=181]
@@ -314,7 +237,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function onTokenWalletDeploy}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=192]
@@ -327,7 +250,14 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function reclaimDeposit}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: the user might want to use {\tt votes=0} to cancel
+  a withdrawal. In this case, this function should skip sending all
+  {\tt queryStatus} messages, unless the goal is to clean the {\tt
+    \_activeProposals} mapping (we advise to create a function for that
+  purpose).
+\item Minor issue: there is no reason to send {\tt queryStatus}
+  messages if the {\tt \_unlockDeposit} function was called, i.e. if
+  the reclaim was already successful
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=103]
@@ -358,7 +288,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function rejectVote}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=87]
@@ -380,7 +310,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function updateStatus}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=127]
@@ -403,7 +333,21 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function vote}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Unlimited voting rights in {\tt Padawan.vote}}{An
+  attacker can call this method several times in the same round and in
+  consecutive rounds to vote several times for the same proposal,
+  until the {\tt Padawan.confirmVote} message is received. Fix: voting
+  rights should be immediately decreased instead of waiting for {\tt
+    confirmVote}.}
+\item \issueMajor{Infinite locking of deposits in {\tt
+    Padawan.vote}}{An attacker could send a faked proposal address to
+  a user to make him vote for a non-existing proposal. It can generate
+  a little increase in storage, but if the fix of the critical issue
+  above is done, it could also lock the deposits forever, as the
+  corresponding contract will never end and unlock the deposits. Fix:
+  this method should take the title of the proposal in argument,
+  computes the address of the proposal, and the contract should
+  correctly deal with bounced messages.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=55]
@@ -432,7 +376,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}createTokenAccount}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=197]
@@ -446,7 +390,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}unlockDeposit}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should skip sending a message if {\tt
+  \_requestedVotes} is 0.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=146]
@@ -463,7 +408,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}updateLockedVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=155]

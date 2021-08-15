@@ -25,17 +25,6 @@ IProposal & \\\hline
 \section{Static Variable Definitions}
 
 
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}deployer &  \\\hline
- & & used in @3.Proposal.\_{}buildPadawanState\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-string & \_{}title &  \\\hline
- & & used in @3.Proposal.:constructor\\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=13]
     address static _deployer;
 \end{lstlisting}
@@ -45,70 +34,6 @@ string & \_{}title &  \\\hline
 \end{lstlisting}
 
 \section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}addrClient &  \\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-ProposalInfo & \_{}proposalInfo &  \\\hline
- & & assigned in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & assigned in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.queryStatus\\\hline
- & & used in @3.Proposal.getVotingResults\\\hline
- & & used in @3.Proposal.getInfo\\\hline
- & & used in @3.Proposal.getCurrentVotes\\\hline
- & & used in @3.Proposal.getCurrentVotes\\\hline
- & & used in @3.Proposal.getAll\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
- & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.\_{}changeState\\\hline
- & & used in @3.Proposal.\_{}changeState\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-ProposalResults & \_{}results &  \\\hline
- & & used in @3.Proposal.getVotingResults\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
-VoteCountModel & \_{}voteCountModel &  \\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-\end{tabular}
-\fi
-
 
 \begin{lstlisting}[firstnumber=16]
     address public _addrClient;
@@ -395,7 +320,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}wrapUp}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: the function could immediately check if the state
+  is above {\tt Ended} to avoid recomputing again.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=116]

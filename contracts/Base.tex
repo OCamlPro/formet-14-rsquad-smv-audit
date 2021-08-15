@@ -100,6 +100,11 @@ In file {\tt Base.sol}
 
 \subsection{Modifier accept}
 
+\begin{itemize}
+\item Minor issue: this modifier is dangerous in general, although not
+  used in this project, because a function using it is easier to
+  target to drain the balance of the contract. It should be removed.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=36]
     modifier accept {

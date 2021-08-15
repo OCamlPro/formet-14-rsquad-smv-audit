@@ -28,7 +28,6 @@
 %\solissuesfalse
 
 
-
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 
@@ -46,7 +45,7 @@
 }
 
 \newcommand\issueCritical[2]{\addcomment{\bf Critical issue: #1}{red}{#2}}
-\newcommand\issueMedium[2]{\addcomment{\bf Medium issue: #1}{pink}{#2}}
+\newcommand\issueMajor[2]{\addcomment{\bf Major issue: #1}{pink}{#2}}
 \newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
 
 \ifsoldraft
@@ -88,11 +87,16 @@ In the report.tex file, choose:
 Issues can be entered with:
 \begin{itemize}
 \item{\bf \textbackslash{}issueCritical\{title\}\{text\}}
-\item{\bf \textbackslash{}issueMedium\{title\}\{text\}}
-\item{\bf \textbackslash{}issueLow\{title\}\{text\}}
+\item{\bf \textbackslash{}issueMajor\{title\}\{text\}}
+\item{\bf \textbackslash{}issueMinor\{title\}\{text\}}
 \end{itemize}
 \fi
 
+\chapter{Introduction}
+\input{introduction.tex}
+
+\chapter{Overview}
+\input{overview.tex}
 
 \ifsolmodules
 \input{modules.tex}

@@ -35,6 +35,10 @@ IFaucetCb & \\\hline
 \section{Variable Definitions}
 
 
+\begin{itemize}
+\item TODO
+\end{itemize}
+
 \ifsoltables
 \noindent\begin{tabular}{|l|l|p{5cm}|}\hline
 uint32 & \_{}deployedPadawansCounter & Initialized to 0  \\\hline
@@ -153,6 +157,9 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 
 \subsection{Modifier checksEmpty}
 
+\begin{itemize}
+\item Minor issue: this modifier is not used. It should be removed.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=66]
     modifier checksEmpty() {
@@ -163,6 +170,10 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \end{lstlisting}
 
 \subsection{Modifier onlyStore}
+
+\begin{itemize}
+\item OK
+\end{itemize}
 
 
 \begin{lstlisting}[firstnumber=72]
@@ -178,11 +189,22 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 
 \subsection{Constructor}
 
-\issueCritical{Constructor for Demiurge (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-
-loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-loren ipsum loren ipsum loren ipsum }
 \begin{itemize}
+\item \issueCritical{Demiurge constructor}{No test is performed to
+  verify the sender in the case {\tt msg.sender != address(0)}. An
+  attacker could use it to deploy the contract himself for another
+  user, providing its own {\tt addrStore}, i.e. with his own code for
+  most contracts.}
+\item Minor issue (readability): a number is used as an error, a
+  constant should be defined instead.
+\item Minor issue (duplicate code): the check {\tt addrStore $!=$
+  address(0)} is performed twice, the second one is useless.
+\item \issueMajor{No initialization check performed}{The {\tt
+    \_createChecks} function gives the false feeling the checks are
+  performed for initialization of the Padawan and Proposal
+  codes. However, the checks are not performed in the functions where
+  they would be required. No attempt is done to perform the same
+  checks for addresses.}
 \item TODO
 \end{itemize}
 
@@ -213,7 +235,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function deployPadawan}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: the function should check that the code of the
+  Padawan contract was correctly initialized.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=103]
