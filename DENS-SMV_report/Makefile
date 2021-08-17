@@ -7,4 +7,4 @@ force:
 	pdflatex report.tex
 
 clean:
-	rm -f *.log *~
+	rm -f *.log *~ *.mtc* *.lof *.maf *.toc *.out *.aux
