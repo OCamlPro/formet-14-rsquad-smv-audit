@@ -1,0 +1,89 @@
+
+\section{Module "IProposal.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.36.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+../Glossary.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Struct ProposalResults}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+id & uint32 & \\\hline
+passed & bool & \\\hline
+votesFor & uint128 & \\\hline
+votesAgainst & uint128 & \\\hline
+totalVotes & uint256 & \\\hline
+model & VoteCountModel & \\\hline
+ts & uint32 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=5]
+struct ProposalResults {
+    uint32 id;
+    bool passed;
+    uint128 votesFor;
+    uint128 votesAgainst;
+    uint256 totalVotes;
+    VoteCountModel model;
+    uint32 ts;
+}
+\end{lstlisting}
+
+\subsubsection{Struct ProposalInfo}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+start & uint32 & \\\hline
+end & uint32 & \\\hline
+title & string & \\\hline
+proposalType & string & \\\hline
+specific & TvmCell & \\\hline
+state & ProposalState & \\\hline
+votesFor & uint128 & \\\hline
+votesAgainst & uint128 & \\\hline
+totalVotes & uint128 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=15]
+struct ProposalInfo {
+    uint32 start;
+    uint32 end;
+    string title;
+    string proposalType;
+    TvmCell specific;
+    ProposalState state;
+    uint128 votesFor;
+    uint128 votesAgainst;
+    uint128 totalVotes;
+}
+\end{lstlisting}
+
+\subsection{Contract Definitions}
+
+\begin{itemize}
+\item IProposal
+\item IEstimateVotesCallback
+\end{itemize}

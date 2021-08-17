@@ -1,0 +1,60 @@
+
+\chapter{Contract GroupResolver}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt GroupResolver.sol}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+TvmCell & \_{}codeGroup &  \\\hline
+ & & used in @16.GroupResolver.\_{}buildGroupState\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=8]
+    TvmCell _codeGroup;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function resolveGroup}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=10]
+    function resolveGroup(string name) public view returns (address group) {
+        TvmCell state = _buildGroupState(name);
+        uint256 hashState = tvm.hash(state);
+        group = address.makeAddrStd(0, hashState);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}buildGroupState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=16]
+    function _buildGroupState(string name) internal virtual view returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: Group,
+            varInit: {_name: name},
+            code: _codeGroup
+        });
+    }
+\end{lstlisting}

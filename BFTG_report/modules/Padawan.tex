@@ -1,0 +1,111 @@
+
+\section{Module "Padawan.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.36.0 &\\\hline
+AbiHeader &  expire &\\\hline
+AbiHeader &  time &\\\hline
+\end{tabular}
+
+
+\subsection{Imports}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+./Base.sol &\\\hline
+./Errors.sol &\\\hline
+./interfaces/IProposal.sol &\\\hline
+./interfaces/IPadawan.sol &\\\hline
+./interfaces/ITokenRoot.sol &\\\hline
+./interfaces/ITokenWallet.sol &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Struct PadawanData}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+ownerAddress & address & \\\hline
+addr & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=12]
+struct PadawanData {
+    address ownerAddress;
+    address addr;
+}
+\end{lstlisting}
+
+\subsubsection{Struct Balance}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+total & uint128 & \\\hline
+locked & uint128 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=16]
+struct Balance {
+    uint128 total;
+    uint128 locked;
+}
+\end{lstlisting}
+
+\subsubsection{Struct ActiveProposal}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+voteProvider & address & \\\hline
+votePrice & uint128 & \\\hline
+votes & uint128 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=20]
+struct ActiveProposal {
+    address voteProvider;
+    uint128 votePrice;
+    uint128 votes;
+}
+\end{lstlisting}
+
+\subsubsection{Struct Reclaim}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+balanceProvider & address & \\\hline
+amount & uint128 & \\\hline
+returnTo & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=25]
+struct Reclaim {
+    address balanceProvider;
+    uint128 amount;
+    address returnTo;
+}
+\end{lstlisting}
+
+\subsection{Contract Definitions}
+
+\begin{itemize}
+\item Padawan
+\end{itemize}

@@ -1,0 +1,510 @@
+
+\chapter{Contract Contest}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt Contest.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+JuryGroupResolver & \\\hline
+IJuryGroupCallback & \\\hline
+IBftgRootStoreCallback & \\\hline
+Checks & \\\hline
+\end{tabular}
+
+
+\section{Constant Definitions}
+
+
+\begin{lstlisting}[firstnumber=15]
+    uint8 constant CHECK_JURY_GROUP_CODE = 1;
+\end{lstlisting}
+
+\section{Static Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & \_{}deployer &  \\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=28]
+    address static _deployer;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+string [] & \_{}tags &  \\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ & & assigned in @18.Contest.:constructor\\\hline
+ & & used in @18.Contest.:constructor\\\hline
+mapping (address =$>$ bool) & \_{}tagsPendings &  \\\hline
+ & & used in @18.Contest.getMembersCallback\\\hline
+ & & assigned in @18.Contest.getMembersCallback\\\hline
+ & & used in @18.Contest.getMembersCallback\\\hline
+ & & used in @18.Contest.getMembersCallback\\\hline
+ & & assigned in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.:onBounce\\\hline
+ & & assigned in @18.Contest.:onBounce\\\hline
+ & & used in @18.Contest.:onBounce\\\hline
+ & & used in @18.Contest.:onBounce\\\hline
+mapping (address =$>$ Member) & \_{}jury &  \\\hline
+ & & used in @18.Contest.vote\\\hline
+ & & used in @18.Contest.reveal\\\hline
+ & & assigned in @18.Contest.getMembersCallback\\\hline
+ & & used in @18.Contest.getMembersCallback\\\hline
+uint128 & \_{}prizePool &  \\\hline
+ & & used in @18.Contest.\_{}calcPointValue\\\hline
+ & & assigned in @18.Contest.:constructor\\\hline
+ & & used in @18.Contest.:constructor\\\hline
+uint32 & \_{}underwayDuration &  \\\hline
+ & & used in @18.Contest.\_{}changeStage\\\hline
+ & & assigned in @18.Contest.:constructor\\\hline
+ & & used in @18.Contest.:constructor\\\hline
+uint32 & \_{}underwayEnds &  \\\hline
+ & & assigned in @18.Contest.\_{}changeStage\\\hline
+ & & used in @18.Contest.\_{}changeStage\\\hline
+bool & \_{}inited & Initialized to false \\\hline
+ & & assigned in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ & & used in @18.Contest.\_{}onInit\\\hline
+ContestStage & \_{}stage &  \\\hline
+ & & used in @18.Contest.vote\\\hline
+ & & used in @18.Contest.submit\\\hline
+ & & used in @18.Contest.reveal\\\hline
+ & & assigned in @18.Contest.changeStage\\\hline
+ & & used in @18.Contest.changeStage\\\hline
+ & & assigned in @18.Contest.\_{}changeStage\\\hline
+ & & used in @18.Contest.\_{}changeStage\\\hline
+ & & used in @18.Contest.\_{}changeStage\\\hline
+ & & assigned in @18.Contest.:constructor\\\hline
+ & & used in @18.Contest.:constructor\\\hline
+mapping (uint32 =$>$ Submission) & \_{}submissions &  \\\hline
+ & & assigned in @18.Contest.submit\\\hline
+ & & used in @18.Contest.submit\\\hline
+ & & used in @18.Contest.calcRewards\\\hline
+uint32 & \_{}submissionsCounter &  \\\hline
+ & & assigned in @18.Contest.submit\\\hline
+ & & used in @18.Contest.submit\\\hline
+ & & used in @18.Contest.submit\\\hline
+ & & used in @18.Contest.submit\\\hline
+ & & used in @18.Contest.\_{}calcPointValue\\\hline
+mapping (address =$>$ mapping (uint32 =$>$ HiddenVote)) & \_{}juryHiddenVotes &  \\\hline
+ & & assigned in @18.Contest.vote\\\hline
+ & & used in @18.Contest.vote\\\hline
+ & & used in @18.Contest.vote\\\hline
+ & & used in @18.Contest.reveal\\\hline
+ & & used in @18.Contest.getHiddenVotesByAddress\\\hline
+mapping (uint32 =$>$ Vote []) & \_{}submissionVotes &  \\\hline
+ & & used in @18.Contest.reveal\\\hline
+ & & used in @18.Contest.calcRewards\\\hline
+ & & used in @18.Contest.calcRewards\\\hline
+uint128 & \_{}pointValue &  \\\hline
+ & & used in @18.Contest.calcRewards\\\hline
+ & & assigned in @18.Contest.\_{}calcPointValue\\\hline
+ & & used in @18.Contest.\_{}calcPointValue\\\hline
+mapping (address =$>$ Reward) & \_{}rewards &  \\\hline
+ & & assigned in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & used in @18.Contest.stakePartisipantReward\\\hline
+ & & assigned in @18.Contest.claimPartisipantReward\\\hline
+ & & used in @18.Contest.claimPartisipantReward\\\hline
+ & & used in @18.Contest.claimPartisipantReward\\\hline
+ & & used in @18.Contest.claimPartisipantReward\\\hline
+ & & used in @18.Contest.claimPartisipantReward\\\hline
+ & & assigned in @18.Contest.calcRewards\\\hline
+ & & used in @18.Contest.calcRewards\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=25]
+    string[] public _tags;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=26]
+    mapping(address => bool) _tagsPendings;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=27]
+    mapping(address => Member) public _jury;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=30]
+    uint128 public _prizePool;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=31]
+    uint32 public _underwayDuration;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=32]
+    uint32 public _underwayEnds;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=45]
+    bool public _inited = false;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=104]
+    ContestStage public _stage;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=118]
+    mapping(uint32 => Submission) public _submissions;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=119]
+    uint32 _submissionsCounter;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=132]
+    mapping(address => mapping(uint32 => HiddenVote)) public _juryHiddenVotes;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=153]
+    mapping(uint32 => Vote[]) public _submissionVotes;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=171]
+    uint128 _pointValue;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=173]
+    mapping(address => Reward) public _rewards;
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for Contest (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=34]
+    constructor(address addrBftgRootStore, string[] tags, uint128 prizePool, uint32 underwayDuration) public {
+        require(msg.sender == _deployer, 101);
+        _tags = tags;
+        _stage = ContestStage.New;
+        _prizePool = prizePool;
+        _underwayDuration = underwayDuration;
+        IBftgRootStore(addrBftgRootStore).queryCode
+            {value: 0.2 ton, bounce: true}
+            (ContractCode.JuryGroup);
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{OnBounce function}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=64]
+    onBounce(TvmSlice) external {
+        if(_tagsPendings.exists(msg.sender)) {
+            delete _tagsPendings[msg.sender];
+            if(_tagsPendings.empty()) {
+                _changeStage(ContestStage.Underway);
+            }
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function calcRewards}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=175]
+    function calcRewards() public {
+        _calcPointValue();
+        optional(uint32, Vote[]) optSubmissionVotes = _submissionVotes.min();
+        while (optSubmissionVotes.hasValue()) {
+            (uint32 id, Vote[] submissionVotes) = optSubmissionVotes.get();
+            for(uint8 i = 0; i < submissionVotes.length; i++) {
+                _rewards[_submissions[id].addrPartisipant].total += submissionVotes[i].score * _pointValue;
+            }
+            optSubmissionVotes = _submissionVotes.next(id);
+        }
+        _changeStage(ContestStage.Reward);
+    }
+\end{lstlisting}
+
+\subsection{Function changeStage}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=234]
+    function changeStage(ContestStage stage) external {
+        tvm.accept();
+        _stage = stage;
+    }
+\end{lstlisting}
+
+\subsection{Function claimPartisipantReward}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=197]
+    function claimPartisipantReward(uint128 amount) public {
+        require(_rewards.exists(msg.sender), 107);
+        require(_rewards[msg.sender].total - _rewards[msg.sender].paid >= amount, 108);
+        _rewards[msg.sender].paid += amount;
+        msg.sender.transfer(amount, true, 1);
+    }
+\end{lstlisting}
+
+\subsection{Function getHiddenVotesByAddress}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=145]
+    function getHiddenVotesByAddress(address juryAddr) public view returns (mapping(uint32 => HiddenVote) hiddenVotes) {
+        hiddenVotes = _juryHiddenVotes[juryAddr];
+    }
+\end{lstlisting}
+
+\subsection{Function getMembersCallback}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=87]
+    function getMembersCallback(mapping(address => Member) members) external override {
+        require(_tagsPendings.exists(msg.sender), 102);
+        delete _tagsPendings[msg.sender];
+        for((, Member member): members) {
+            if(member.balance >= 0) {
+                _jury[member.addr] = member;
+            }
+        }
+        if(_tagsPendings.empty()) {
+            _changeStage(ContestStage.Underway);
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function hashVote}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=223]
+    function hashVote(uint32 submissionId, uint8 score, string comment) public pure returns (uint hash) {
+        TvmBuilder builder;
+        builder.store(submissionId, score, comment);
+        TvmCell cell = builder.toCell();
+        hash = tvm.hash(cell);
+    }
+\end{lstlisting}
+
+\subsection{Function reveal}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=155]
+    function reveal(RevealVote[] revealVotes) external {
+        require(_stage == ContestStage.Reveal, 104);
+        require(_jury.exists(msg.sender), 105);
+        for(uint8 i = 0; i < revealVotes.length; i++) {
+            uint oldHash = _juryHiddenVotes[msg.sender][revealVotes[i].submissionId].hash;
+            uint newHash = hashVote(revealVotes[i].submissionId, revealVotes[i].score, revealVotes[i].comment);
+            require(oldHash == newHash, 106);
+            _submissionVotes[revealVotes[i].submissionId].push(Vote(msg.sender, revealVotes[i].score, revealVotes[i].comment));
+        }
+        msg.sender.transfer(0, true, 64);
+    }
+\end{lstlisting}
+
+\subsection{Function stakePartisipantReward}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=204]
+    function stakePartisipantReward(uint128 amount, string tag, address addrJury) public {
+        require(_rewards.exists(msg.sender), 107);
+        require(_rewards[msg.sender].total - _rewards[msg.sender].paid >= amount, 108);
+        bool isTagExists = false;
+        for(uint8 i = 0; i < _tags.length; i++) {
+            if(_tags[i] == tag) isTagExists = true;
+        }
+        require(isTagExists, 108);
+        _rewards[msg.sender].paid += amount;
+        IBftgRoot(_deployer).registerMemberJuryGroup
+            {value: amount, bounce: true, flag: 2}
+            (tag, addrJury == address(0) ? msg.sender : addrJury);
+        msg.sender.transfer(0, true, 64);
+    }
+\end{lstlisting}
+
+\subsection{Function submit}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=121]
+    function submit(address addrPartisipant, string forumLink, string fileLink, uint hash) external {
+        require(_stage == ContestStage.Underway, 104);
+        _submissions[_submissionsCounter] = (Submission(_submissionsCounter, addrPartisipant, forumLink, fileLink, hash, uint32(now)));
+        _submissionsCounter += 1;
+        msg.sender.transfer(0, true, 64);
+    }
+\end{lstlisting}
+
+\subsection{Function updateAddr}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=81]
+    function updateAddr(ContractAddr kind, address addr) external override {}
+\end{lstlisting}
+
+\subsection{Function updateCode}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=73]
+    function updateCode(ContractCode kind, TvmCell code) external override {
+        if (kind == ContractCode.JuryGroup) {
+            _codeJuryGroup = code;
+            _passCheck(CHECK_JURY_GROUP_CODE);
+        }
+        _onInit();
+    }
+\end{lstlisting}
+
+\subsection{Function vote}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=134]
+    function vote(HiddenVote[] hiddenVotes) external {
+        require(_stage == ContestStage.Voting, 104);
+        require(_jury.exists(msg.sender), 105);
+        for(uint8 i = 0; i < hiddenVotes.length; i++) {
+            if(!_juryHiddenVotes[msg.sender].exists(hiddenVotes[i].submissionId)) {
+                _juryHiddenVotes[msg.sender][hiddenVotes[i].submissionId] = hiddenVotes[i];
+            }
+        }
+        msg.sender.transfer(0, true, 64);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}calcPointValue}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=188]
+    function _calcPointValue() private inline {
+        // TODO: change the formula
+        _pointValue = _prizePool / (_submissionsCounter * 10);
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}changeStage}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=106]
+    function _changeStage(ContestStage stage) private inline returns (ContestStage) {
+        require(_stage < stage, 103);
+        if (stage == ContestStage.Underway) {
+            _underwayEnds = uint32(now) + _underwayDuration;
+        }
+        _stage = stage;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}createChecks}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=17]
+    function _createChecks() private inline {
+        _checkList = CHECK_JURY_GROUP_CODE;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}onInit}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=47]
+    function _onInit() private {
+        if(_isCheckListEmpty() && !_inited) {
+            _inited = true;
+            for(uint8 i = 0; i < _tags.length; i++) {
+                TvmCell state = _buildJuryGroupState(_tags[i], _deployer);
+                uint256 hashState = tvm.hash(state);
+                address addrJuryGroup = address.makeAddrStd(0, hashState);
+                _tagsPendings[addrJuryGroup] = true;
+                IJuryGroup(addrJuryGroup).getMembers{
+                    value: 0.2 ton,
+                    flag: 1,
+                    bounce: true
+                }();
+            }
+        }
+    }
+\end{lstlisting}

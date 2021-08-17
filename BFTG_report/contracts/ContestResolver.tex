@@ -1,0 +1,63 @@
+
+\chapter{Contract ContestResolver}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt ContestResolver.sol}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+TvmCell & \_{}codeContest &  \\\hline
+ & & assigned in @1.BftgRoot.updateCode\\\hline
+ & & used in @1.BftgRoot.updateCode\\\hline
+ & & used in @1.BftgRoot.getStored\\\hline
+ & & used in @8.ContestResolver.\_{}buildContestState\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=8]
+    TvmCell _codeContest;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function resolveContest}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=10]
+    function resolveContest(address deployer) public view returns (address addrContest) {
+        TvmCell state = _buildContestState(deployer);
+        uint256 hashState = tvm.hash(state);
+        addrContest = address.makeAddrStd(0, hashState);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}buildContestState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=16]
+    function _buildContestState(address deployer) internal virtual view returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: Contest,
+            varInit: {_deployer: deployer},
+            code: _codeContest
+        });
+    }
+\end{lstlisting}

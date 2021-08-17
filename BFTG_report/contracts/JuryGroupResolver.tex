@@ -1,0 +1,65 @@
+
+\chapter{Contract JuryGroupResolver}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt JuryGroupResolver.sol}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+TvmCell & \_{}codeJuryGroup &  \\\hline
+ & & assigned in @1.BftgRoot.updateCode\\\hline
+ & & used in @1.BftgRoot.updateCode\\\hline
+ & & used in @1.BftgRoot.getStored\\\hline
+ & & assigned in @18.Contest.updateCode\\\hline
+ & & used in @18.Contest.updateCode\\\hline
+ & & used in @9.JuryGroupResolver.\_{}buildJuryGroupState\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=6]
+    TvmCell _codeJuryGroup;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function resolveJuryGroup}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=8]
+    function resolveJuryGroup(string tag, address deployer) public view returns (address addrJuryGroup) {
+        TvmCell state = _buildJuryGroupState(tag, deployer);
+        uint256 hashState = tvm.hash(state);
+        addrJuryGroup = address.makeAddrStd(0, hashState);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}buildJuryGroupState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=14]
+    function _buildJuryGroupState(string tag, address deployer) internal view returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: JuryGroup,
+            varInit: {_tag: tag, _deployer: deployer},
+            code: _codeJuryGroup
+        });
+    }
+\end{lstlisting}

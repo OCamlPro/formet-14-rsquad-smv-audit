@@ -1,0 +1,124 @@
+
+\chapter{Contract Group}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt Group.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+IGroup & \\\hline
+\end{tabular}
+
+
+\section{Static Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+string & \_{}name &  \\\hline
+ & & used in @21.Group.getMembers\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=11]
+    string static _name;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address [] & \_{}members &  \\\hline
+ & & assigned in @21.Group.removeMember\\\hline
+ & & used in @21.Group.removeMember\\\hline
+ & & used in @21.Group.removeMember\\\hline
+ & & used in @21.Group.removeMember\\\hline
+ & & used in @21.Group.removeMember\\\hline
+ & & used in @21.Group.getMembers\\\hline
+ & & used in @21.Group.addMember\\\hline
+ & & assigned in @21.Group.:constructor\\\hline
+ & & used in @21.Group.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=12]
+    address[] _members;
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for Group (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=15]
+    constructor(address[] initialMembers) public onlyContract {
+        _members = initialMembers;
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function addMember}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=25]
+    function addMember(uint128 idProposal, address member) public onlyContract {
+        idProposal;
+        _members.push(member);
+    }
+\end{lstlisting}
+
+\subsection{Function getMembers}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=19]
+    function getMembers() override public onlyContract {
+        IGroupCallback(msg.sender).onGetMembers
+            {value: 0, flag: 64, bounce: true}
+            (_name, _members);
+    }
+\end{lstlisting}
+
+\subsection{Function removeMember}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=30]
+    function removeMember(uint128 idProposal, address member) public onlyContract {
+        idProposal;
+        address[] members;
+        for(uint32 index = 0; index < _members.length; index++) {
+            if(_members[index] != member) {
+                members.push(_members[index]);
+            }
+        }
+        _members = members;
+    }
+\end{lstlisting}

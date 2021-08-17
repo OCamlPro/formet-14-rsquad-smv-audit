@@ -1,0 +1,532 @@
+
+\chapter{Contract Proposal}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt Proposal.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+PadawanResolver & \\\hline
+GroupResolver & \\\hline
+IProposal & \\\hline
+IGroupCallback & \\\hline
+\end{tabular}
+
+
+\section{Static Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & \_{}deployer &  \\\hline
+ & & used in @3.Proposal.\_{}buildPadawanState\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+uint32 & \_{}id &  \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=15]
+    address static _deployer;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=16]
+    uint32 static _id;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+address & \_{}client &  \\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+uint128 & \_{}votePrice &  \\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.estimateVotes\\\hline
+ & & used in @3.Proposal.estimateVotes\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+uint128 & \_{}voteTotal &  \\\hline
+ & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
+ & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
+ & & used in @3.Proposal.\_{}softMajority\\\hline
+ & & used in @3.Proposal.\_{}softMajority\\\hline
+ & & used in @3.Proposal.\_{}softMajority\\\hline
+ & & used in @3.Proposal.\_{}softMajority\\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+address & \_{}voteProvider &  \\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.estimateVotes\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+address [] & \_{}whiteList &  \\\hline
+ & & assigned in @3.Proposal.onGetMembers\\\hline
+ & & used in @3.Proposal.onGetMembers\\\hline
+ & & used in @3.Proposal.\_{}findInWhiteList\\\hline
+ & & used in @3.Proposal.\_{}findInWhiteList\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+bool & \_{}openProposal & Initialized to false \\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ProposalInfo & \_{}proposalInfo &  \\\hline
+ & & assigned in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & assigned in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.vote\\\hline
+ & & used in @3.Proposal.queryStatus\\\hline
+ & & used in @3.Proposal.getVotingResults\\\hline
+ & & used in @3.Proposal.getInfo\\\hline
+ & & used in @3.Proposal.getCurrentVotes\\\hline
+ & & used in @3.Proposal.getCurrentVotes\\\hline
+ & & used in @3.Proposal.getAll\\\hline
+ & & used in @3.Proposal.\_{}wrapUp\\\hline
+ & & used in @3.Proposal.\_{}wrapUp\\\hline
+ & & used in @3.Proposal.\_{}wrapUp\\\hline
+ & & used in @3.Proposal.\_{}wrapUp\\\hline
+ & & used in @3.Proposal.\_{}wrapUp\\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & assigned in @3.Proposal.\_{}changeState\\\hline
+ & & used in @3.Proposal.\_{}changeState\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+ProposalResults & \_{}results &  \\\hline
+ & & used in @3.Proposal.getVotingResults\\\hline
+ & & assigned in @3.Proposal.\_{}finalize\\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+VoteCountModel & \_{}voteCountModel &  \\\hline
+ & & used in @3.Proposal.\_{}finalize\\\hline
+ & & assigned in @3.Proposal.:constructor\\\hline
+ & & used in @3.Proposal.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=18]
+    address _client;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=20]
+    uint128 _votePrice;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=21]
+    uint128 _voteTotal;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=22]
+    address _voteProvider;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=24]
+    address[] _whiteList;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=25]
+    bool _openProposal = false;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=27]
+    ProposalInfo _proposalInfo;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=29]
+    ProposalResults _results;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=30]
+    VoteCountModel _voteCountModel;
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for Proposal (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=32]
+    constructor(
+        address client,
+        string title,
+        uint128 votePrice,
+        uint128 voteTotal,
+        address voteProvider,
+        address group,
+        address[] whiteList,
+        string proposalType,
+        TvmCell specific,
+        TvmCell codePadawan
+    ) public {
+        require(_deployer == msg.sender);
+
+        _client = client;
+
+        _votePrice = votePrice;
+        _voteTotal = voteTotal;
+        _voteProvider = voteProvider;
+
+        _proposalInfo.title = title;
+        _proposalInfo.start = uint32(now);
+        _proposalInfo.end = uint32(now + 60 * 60 * 24 * 7);
+        _proposalInfo.proposalType = proposalType;
+        _proposalInfo.specific = specific;
+        _proposalInfo.state = ProposalState.New;
+        _proposalInfo.totalVotes = voteTotal;
+
+        _codePadawan = codePadawan;
+
+        if(group != address(0)) {
+            _getGroupMembers(group);
+        } else if (!whiteList.empty()) {
+            _whiteList = whiteList;
+        } else  {
+            _openProposal = true;
+        }
+
+        _voteCountModel = VoteCountModel.SoftMajority;
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function estimateVotes}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=78]
+    function estimateVotes(uint128 votes, bool choice) external override {
+        IEstimateVotesCallback(msg.sender).onEstimateVotes
+            {value: 0, flag: 64, bounce: true}
+            (votes * _votePrice, _votePrice, _voteProvider, votes, choice);
+    }
+\end{lstlisting}
+
+\subsection{Function getAll}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=199]
+    function getAll() public view override returns (ProposalInfo info) {
+        info = _proposalInfo;
+    }
+\end{lstlisting}
+
+\subsection{Function getCurrentVotes}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=212]
+    function getCurrentVotes() external override view returns (uint128 votesFor, uint128 votesAgainst) {
+        return (_proposalInfo.votesFor, _proposalInfo.votesAgainst);
+    }
+\end{lstlisting}
+
+\subsection{Function getInfo}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=208]
+    function getInfo() public view returns (ProposalInfo info) {
+        info = _proposalInfo;
+    }
+\end{lstlisting}
+
+\subsection{Function getVotingResults}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=203]
+    function getVotingResults() public view returns (ProposalResults vr) {
+        require(_proposalInfo.state > ProposalState.Ended, Errors.VOTING_HAS_NOT_ENDED);
+        vr = _results;
+    }
+\end{lstlisting}
+
+\subsection{Function onGetMembers}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=220]
+    function onGetMembers(string name, address[] members) public override onlyContract { name;
+        _whiteList = members;
+    }
+\end{lstlisting}
+
+\subsection{Function queryStatus}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=191]
+    function queryStatus() external override {
+        IPadawan(msg.sender).updateStatus
+            {value: 0, flag: 64, bounce: true}
+            (_proposalInfo.state);
+    }
+\end{lstlisting}
+
+\subsection{Function vote}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=84]
+    function vote(address padawanOwner, bool choice, uint128 votes) external override {
+        address addrPadawan = resolvePadawan(padawanOwner);
+        uint16 errorCode = 0;
+
+        require(_openProposal || _findInWhiteList(padawanOwner), Errors.INVALID_CALLER);
+
+        if (addrPadawan != msg.sender) {
+            errorCode = Errors.NOT_AUTHORIZED_CONTRACT;
+        } else if (now < _proposalInfo.start) {
+            errorCode = Errors.VOTING_NOT_STARTED;
+        } else if (now > _proposalInfo.end) {
+            errorCode = Errors.VOTING_HAS_ENDED;
+        }
+
+        if (errorCode > 0) {
+            IPadawan(msg.sender).rejectVote{value: 0, flag: 64, bounce: true}(votes, errorCode);
+        } else {
+            IPadawan(msg.sender).confirmVote{value: 0, flag: 64, bounce: true}(votes, _votePrice, _voteProvider);
+            if (choice) {
+                _proposalInfo.votesFor += votes;
+            } else {
+                _proposalInfo.votesAgainst += votes;
+            }
+        }
+
+        _wrapUp();
+    }
+\end{lstlisting}
+
+\subsection{Function wrapUp}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=73]
+    function wrapUp() external override {
+        _wrapUp();
+        msg.sender.transfer(0, false, 64);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}buildPadawanState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=183]
+    function _buildPadawanState(address owner) internal view override returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: Padawan,
+            varInit: {_deployer: _deployer, _owner: owner},
+            code: _codePadawan
+        });
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}calculateVotes}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=161]
+    function _calculateVotes(
+        uint128 yes,
+        uint128 no
+    ) private view returns (bool) {
+        bool passed = false;
+        passed = _softMajority(yes, no);
+        return passed;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}changeState}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=179]
+    function _changeState(ProposalState state) private inline {
+        _proposalInfo.state = state;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}finalize}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=112]
+    function _finalize(bool passed) private {
+        _results = ProposalResults(
+            uint32(0),
+            passed,
+            _proposalInfo.votesFor,
+            _proposalInfo.votesAgainst,
+            _voteTotal,
+            _voteCountModel,
+            uint32(now)
+        );
+
+        ProposalState state = passed ? ProposalState.Passed : ProposalState.NotPassed;
+
+        _changeState(state);
+
+        IClient(address(_client)).onProposalPassed{value: 1 ton} (_proposalInfo);
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}findInWhiteList}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=224]
+    function _findInWhiteList(address padawanOwner) view private returns (bool) {
+        for(uint32 index = 0; index < _whiteList.length; index++) {
+            if(_whiteList[index] == padawanOwner) {
+                return true;
+            }
+        }
+        return false;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}getGroupMembers}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=233]
+    function _getGroupMembers(address group) view private {
+        IGroup(group).getMembers();
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}softMajority}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=170]
+    function _softMajority(
+        uint128 yes,
+        uint128 no
+    ) private view returns (bool) {
+        bool passed = false;
+        passed = yes >= 1 + (_voteTotal / 10) + (no * ((_voteTotal / 2) - (_voteTotal / 10))) / (_voteTotal / 2);
+        return passed;
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}tryEarlyComplete}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=130]
+    function _tryEarlyComplete(
+        uint128 yes,
+        uint128 no
+    ) private view returns (bool, bool) {
+        (bool completed, bool passed) = (false, false);
+        if (yes * 2 > _voteTotal) {
+            completed = true;
+            passed = true;
+        } else if(no * 2 >= _voteTotal) {
+            completed = true;
+            passed = false;
+        }
+        return (completed, passed);
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}wrapUp}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=145]
+    function _wrapUp() private {
+        (bool completed, bool passed) = (false, false);
+
+        if (now > _proposalInfo.end) {
+            completed = true;
+            passed = _calculateVotes(_proposalInfo.votesFor, _proposalInfo.votesAgainst);
+        } else {
+            (completed, passed) = _tryEarlyComplete(_proposalInfo.votesFor, _proposalInfo.votesAgainst);
+        }
+
+        if (completed) {
+            _changeState(ProposalState.Ended);
+            _finalize(passed);
+        }
+    }
+\end{lstlisting}

@@ -1,0 +1,71 @@
+
+\chapter{Contract Checks}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt Checks.sol}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+uint8 & \_{}checkList &  \\\hline
+ & & assigned in @1.BftgRoot.\_{}createChecks\\\hline
+ & & used in @1.BftgRoot.\_{}createChecks\\\hline
+ & & assigned in @18.Contest.\_{}createChecks\\\hline
+ & & used in @18.Contest.\_{}createChecks\\\hline
+ & & assigned in @5.Checks.\_{}passCheck\\\hline
+ & & used in @5.Checks.\_{}passCheck\\\hline
+ & & used in @5.Checks.\_{}isCheckListEmpty\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=4]
+    uint8 _checkList;
+\end{lstlisting}
+
+\section{Modifier Definitions}
+
+
+\subsection{Modifier checksEmpty}
+
+
+\begin{lstlisting}[firstnumber=12]
+    modifier checksEmpty() {
+        require(_isCheckListEmpty(), 100); //Errors.NOT_ALL_CHECKS_PASSED);
+        tvm.accept();
+        _;
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}isCheckListEmpty}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=9]
+    function _isCheckListEmpty() internal view inline returns (bool) {
+        return (_checkList == 0);
+    }
+\end{lstlisting}
+
+\subsection{Function \_{}passCheck}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=6]
+    function _passCheck(uint8 check) internal inline {
+        _checkList &= ~check;
+    }
+\end{lstlisting}

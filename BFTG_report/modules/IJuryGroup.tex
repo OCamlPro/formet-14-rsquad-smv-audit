@@ -1,0 +1,41 @@
+
+\section{Module "IJuryGroup.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.43.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Struct Member}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+id & uint32 & \\\hline
+balance & uint128 & \\\hline
+addr & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=3]
+struct Member {
+    uint32 id;
+    uint128 balance;
+    address addr;
+}
+\end{lstlisting}
+
+\subsection{Contract Definitions}
+
+\begin{itemize}
+\item IJuryGroup
+\item IJuryGroupCallback
+\end{itemize}

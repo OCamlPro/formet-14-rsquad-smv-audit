@@ -1,0 +1,152 @@
+
+\section{Module "IContest.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.42.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Enum ContestStage}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|p{6cm}|}\hline
+Undefined & \\\hline
+New & \\\hline
+Underway & \\\hline
+Voting & \\\hline
+Reveal & \\\hline
+Rank & \\\hline
+Reward & \\\hline
+Finish & \\\hline
+Last & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=3]
+enum ContestStage {
+    Undefined,
+    New,
+    Underway,
+    Voting,
+    Reveal,
+    Rank,
+    Reward,
+    Finish,
+    Last
+}
+\end{lstlisting}
+
+\subsubsection{Struct Submission}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+id & uint32 & \\\hline
+addrPartisipant & address & \\\hline
+forumLink & string & \\\hline
+fileLink & string & \\\hline
+hash & uint256 & \\\hline
+createdAt & uint32 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=15]
+struct Submission {
+  uint32 id;
+  address addrPartisipant;
+  string forumLink;
+  string fileLink;
+  uint hash;
+  uint32 createdAt;
+}
+\end{lstlisting}
+
+\subsubsection{Struct HiddenVote}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+submissionId & uint32 & \\\hline
+hash & uint256 & \\\hline
+hiddenComment & bytes & \\\hline
+hiddenScore & bytes & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=24]
+struct HiddenVote {
+    uint32 submissionId;
+    uint hash;
+    bytes hiddenComment;
+    bytes hiddenScore;
+}
+\end{lstlisting}
+
+\subsubsection{Struct RevealVote}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+submissionId & uint32 & \\\hline
+score & uint8 & \\\hline
+comment & bytes & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=31]
+struct RevealVote {
+    uint32 submissionId;
+    uint8 score;
+    bytes comment;
+}
+\end{lstlisting}
+
+\subsubsection{Struct Vote}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+addrJury & address & \\\hline
+score & uint8 & \\\hline
+comment & bytes & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=37]
+struct Vote {
+    address addrJury;
+    uint8 score;
+    bytes comment;
+}
+\end{lstlisting}
+
+\subsubsection{Struct Reward}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+total & uint128 & \\\hline
+paid & uint128 & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=43]
+struct Reward {
+    uint128 total;
+    uint128 paid;
+}
+\end{lstlisting}

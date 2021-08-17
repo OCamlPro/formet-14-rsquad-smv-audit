@@ -1,0 +1,100 @@
+
+\section{Module "Glossary.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.36.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Enum VoteCountModel}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|p{6cm}|}\hline
+Undefined & \\\hline
+Majority & \\\hline
+SoftMajority & \\\hline
+SuperMajority & \\\hline
+Other & \\\hline
+Reserved & \\\hline
+Last & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=3]
+enum VoteCountModel {
+    Undefined,
+    Majority,
+    SoftMajority,
+    SuperMajority,
+    Other,
+    Reserved,
+    Last
+}
+\end{lstlisting}
+
+\subsubsection{Enum ProposalType}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|p{6cm}|}\hline
+Undefined & \\\hline
+SetCode & \\\hline
+Reserve & \\\hline
+SetOwner & \\\hline
+SetRootOwner & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=13]
+enum ProposalType {
+    Undefined,
+    SetCode,
+    Reserve,
+    SetOwner,
+    SetRootOwner
+}
+\end{lstlisting}
+
+\subsubsection{Enum ProposalState}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|p{6cm}|}\hline
+Undefined & \\\hline
+New & \\\hline
+OnVoting & \\\hline
+Ended & \\\hline
+Passed & \\\hline
+NotPassed & \\\hline
+Finalized & \\\hline
+Distributed & \\\hline
+Reserved & \\\hline
+Last & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=21]
+enum ProposalState {
+    Undefined,
+    New,
+    OnVoting,
+    Ended,
+    Passed,
+    NotPassed,
+    Finalized,
+    Distributed,
+    Reserved,
+    Last
+}
+\end{lstlisting}

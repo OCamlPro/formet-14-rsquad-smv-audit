@@ -1,0 +1,107 @@
+\documentclass{report}
+
+\usepackage{fancyhdr}
+\usepackage{minitoc}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage{titletoc}
+\usepackage[table]{xcolor}
+\renewcommand{\listfigurename}{Table of Major and Critical Issues}
+\input{highlighter}
+
+\newif\ifsolmodules
+\newif\ifsoltables
+\newif\ifsolissues
+\newif\ifsoldraft
+
+\soldrafttrue
+%\soldraftfalse
+
+%\solmodulestrue
+\solmodulesfalse
+
+\soltablestrue
+%\soltablesfalse
+
+\solissuestrue
+%\solissuesfalse
+
+
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\newcommand\addcomment[3]{
+  \addcontentsline{lof}{section}{#1}
+  \noindent\begin{tabular}{|p{12cm}| }\hline
+   \rowcolor{#2}{#1}\\
+   {#3}\\\hline
+  \end{tabular}
+}
+
+\newcommand\issueCritical[2]{\addcomment{\bf Critical issue: #1}{red}{#2}}
+\newcommand\issueMajor[2]{\addcomment{\bf Major issue: #1}{pink}{#2}}
+\newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
+
+\ifsoldraft
+\usepackage[firstpage]{draftwatermark}
+\SetWatermarkText{Confidential}
+\SetWatermarkScale{5}
+\fi
+
+\pagestyle{fancy}
+\renewcommand{\footrulewidth}{0.4pt}
+\fancyhead[RO,RE]{\leftmark}
+\fancyhead[LO,LE]{\thepage}
+\fancyfoot{}
+\fancyfoot[RO,RE]{\thepage}
+\fancyfoot[LO,LE]{\leftmark}
+
+\begin{document}
+
+\title{Audit}
+\author{By OCamlPro}
+\maketitle
+\dominitoc
+\ifsolissues
+\listoffigures
+\fi
+\tableofcontents
+
+\ifsoldraft
+\chapter*{To edit this document}
+
+In the report.tex file, choose:
+\begin{itemize}
+\item{\bf \textbackslash{}soldraftfalse} to remove draft mode (watermarks, advises)
+\item{\bf \textbackslash{}solmodulestrue} to display modules by chapter instead of contracts
+\item{\bf \textbackslash{}soltablestrue} to display tables for parameters and returns
+\item{\bf \textbackslash{}solissuesfalse} to remove the table of issues
+\end{itemize}
+
+Issues can be entered with:
+\begin{itemize}
+\item{\bf \textbackslash{}issueCritical\{title\}\{text\}}
+\item{\bf \textbackslash{}issueMajor\{title\}\{text\}}
+\item{\bf \textbackslash{}issueMinor\{title\}\{text\}}
+\end{itemize}
+\fi
+
+\chapter{Introduction}
+\input{introduction.tex}
+
+\chapter{Overview}
+\input{overview.tex}
+
+%\ifsolmodules
+\input{modules.tex}
+%\else
+\input{contracts.tex}
+%\fi
+\end{document}

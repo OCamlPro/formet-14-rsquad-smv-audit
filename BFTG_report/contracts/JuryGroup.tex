@@ -1,0 +1,167 @@
+
+\chapter{Contract JuryGroup}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt JuryGroup.sol}
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+IJuryGroup & \\\hline
+\end{tabular}
+
+
+\section{Static Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+string & \_{}tag &  \\\hline
+address & \_{}deployer &  \\\hline
+ & & used in @19.JuryGroup.:constructor\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=11]
+    string static public _tag;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=12]
+    address static _deployer;
+\end{lstlisting}
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+mapping (address =$>$ Member) & \_{}members &  \\\hline
+ & & assigned in @19.JuryGroup.withdraw\\\hline
+ & & used in @19.JuryGroup.withdraw\\\hline
+ & & used in @19.JuryGroup.withdraw\\\hline
+ & & used in @19.JuryGroup.withdraw\\\hline
+ & & assigned in @19.JuryGroup.registerMember\\\hline
+ & & used in @19.JuryGroup.registerMember\\\hline
+ & & used in @19.JuryGroup.registerMember\\\hline
+ & & used in @19.JuryGroup.getMembers\\\hline
+ & & assigned in @19.JuryGroup.\_{}addMember\\\hline
+ & & used in @19.JuryGroup.\_{}addMember\\\hline
+uint32 & \_{}membersCounter &  \\\hline
+ & & assigned in @19.JuryGroup.\_{}addMember\\\hline
+ & & used in @19.JuryGroup.\_{}addMember\\\hline
+ & & used in @19.JuryGroup.\_{}addMember\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=14]
+    mapping(address => Member) public _members;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=15]
+    uint32 _membersCounter;
+\end{lstlisting}
+
+\section{Modifier Definitions}
+
+
+\subsection{Modifier onlyDeployer}
+
+
+\begin{lstlisting}[firstnumber=6]
+    modifier onlyDeployer() {
+        require(msg.sender == _deployer, 100);
+        _;
+    }
+\end{lstlisting}
+
+\section{Constructor Definitions}
+
+
+\subsection{Constructor}
+
+\issueCritical{Constructor for JuryGroup (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+
+loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
+loren ipsum loren ipsum loren ipsum }
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=17]
+    constructor(address[] initialMembers) public {
+        require(_deployer == msg.sender, 100);
+        for(uint8 i = 0; i < initialMembers.length; i++) {
+            _addMember(initialMembers[i], 0);
+        }
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function getMembers}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=45]
+    function getMembers() public override {
+        IJuryGroupCallback(msg.sender).getMembersCallback{value: 0, flag: 64, bounce: false}(_members);
+    }
+\end{lstlisting}
+
+\subsection{Function registerMember}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=24]
+    function registerMember(address addrMember) public override onlyDeployer {
+        if(_members.exists(addrMember) == false) {
+            _addMember(addrMember, msg.value);
+        } else {
+            _members[addrMember].balance += msg.value;
+        }
+    }
+\end{lstlisting}
+
+\subsection{Function withdraw}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=37]
+    function withdraw(uint128 amount) public {
+        require(msg.sender != address(0), 101);
+        require(_members[msg.sender].balance >= 0 ton, 201);
+        require(_members[msg.sender].balance < amount, 202);
+        msg.sender.transfer(amount, true, 1);
+        _members[msg.sender].balance -= amount;
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}addMember}
+
+\begin{itemize}
+\item TODO
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=32]
+    function _addMember(address addrMember, uint128 value) private inline {
+        _members[addrMember] = Member(_membersCounter, value, addrMember);
+        _membersCounter++;
+    }
+\end{lstlisting}
