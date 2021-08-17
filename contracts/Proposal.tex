@@ -3,27 +3,19 @@
 
 \minitoc
 
+
+\section{Overview}
+
 In file {\tt Proposal.sol}
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-PadawanResolver & \\\hline
-IProposal & \\\hline
-\end{tabular}
-
-
-\section{Event Definitions}
-
-
-\begin{lstlisting}[firstnumber=23]
-    event ProposalFinalized(ProposalResults results);
-\end{lstlisting}
+This contract is used to collect the votes for a particular
+proposal. Votes are sent by {\tt Padawan} contracts.
 
 \section{Static Variable Definitions}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=13]
     address static _deployer;
@@ -34,6 +26,10 @@ IProposal & \\\hline
 \end{lstlisting}
 
 \section{Variable Definitions}
+
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=16]
     address public _addrClient;
@@ -56,12 +52,16 @@ IProposal & \\\hline
 
 \subsection{Constructor}
 
-\issueCritical{Constructor for Proposal (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-
-loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-loren ipsum loren ipsum loren ipsum }
 \begin{itemize}
-\item TODO
+\item Minor issue: there is a limitation to 16 kB for deploy
+  messages. For this constructor, the deploy message contains the code
+  of {\tt Proposal}, the title and the code of {\tt Padawan}. Thus, it
+  might become a problem in the future. There is already a mechanism
+  in the infrastructure to download codes from the {\tt
+    DemiurgeStore}, this contract should take advantage of it.
+\item Minor issue: the {\tt \_voteCountModel} variable is initialized
+  to {\tt SoftMajority} in this constructor, but it is not used
+  anywhere. Consider removing it if no future use.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=25]
@@ -96,7 +96,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getAll}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=168]
@@ -108,7 +108,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getCurrentVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=181]
@@ -120,7 +120,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getInfo}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=177]
@@ -132,7 +132,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getVotingResults}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=172]
@@ -145,7 +145,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function queryStatus}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that the message
+  contains enough value to send the message.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=162]
@@ -157,7 +158,15 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function vote}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that the message
+  contains enough value to send back the reply;
+\item Minor issue: given that the constructor initializes {\tt
+  \_proposalInfo.start} to {\tt now}, it is impossible for this
+  function to return the {\tt VOTING\_NOT\_STARTED} error.
+\item Minor issue: the transaction could be aborted if a {\tt
+  onProposalPassed} message is sent by {\tt finalize}, together with
+  {\tt rejectVote} or {\tt confirmVote} messages, because of the flag 64.
+  Need to test that it is ok.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=55]
@@ -191,7 +200,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function wrapUp}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=49]
@@ -207,7 +216,9 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}buildPadawanState}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (code repetition): instead of defining this
+  function, the same function in {\tt PadawanResolver} should take the
+  {\tt deployer} in argument.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=154]
@@ -223,7 +234,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}calculateVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=132]
@@ -240,7 +251,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}changeState}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=150]
@@ -252,7 +263,10 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}finalize}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that the message
+  contains enough value to send the {\tt onProposalPassed}
+  message. This check could be moved earlier in methods calling {\tt
+    \_finalize}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=81]
@@ -280,7 +294,13 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}softMajority}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Division by 0 in {\tt
+    Proposal.\_softMajority}}{If {\tt totalVotes=1}, this function
+  fails with division by 0. Fix: the function should check that {\tt
+    totalVotes>1}, and add special cases for {\tt totalVotes=1} and
+  {\tt totalVotes=0}}
+\item Minor issue (readability): use {\tt returns (bool passed)} to
+  avoid the need to define a temporary variable and to return it.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=141]
@@ -297,7 +317,13 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}tryEarlyComplete}
 
 \begin{itemize}
-\item TODO
+\item \issueMajor{Overflow in {\tt Proposal.\_tryEarlyComplete}}{If
+  vote counts are expected to be in the full {\tt uint32} range, {\tt
+    yes*2} and {\tt no*2} can overflow. Fix: use {\tt uint64} for
+  parameters.}
+\item Minor issue (readability): use {\tt returns (bool completed,
+  bool passed)} to avoid the need to define temporary variables and to
+  return them.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=101]
@@ -321,7 +347,11 @@ loren ipsum loren ipsum loren ipsum }
 
 \begin{itemize}
 \item Minor issue: the function could immediately check if the state
-  is above {\tt Ended} to avoid recomputing again.
+  is above {\tt Ended} to avoid recomputing again;
+\item Minor issue: there is no need to call {\tt \_changeState} before
+  calling {\tt \_finalize}, as {\tt \_finalize} always calls {\tt
+    \_changeState} and will thus override the state written in this
+  function;
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=116]

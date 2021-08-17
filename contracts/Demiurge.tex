@@ -5,6 +5,9 @@
 
 In file {\tt Demiurge.sol}
 
+The {\tt Demiurge} contract acts as a central hub to create user
+contracts and proposal contracts.x
+
 \section{Contract Inheritance}
 
 
@@ -19,6 +22,10 @@ IFaucetCb & \\\hline
 
 \section{Constant Definitions}
 
+
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=30]
     uint8 constant CHECK_PROPOSAL = 1;
@@ -36,77 +43,8 @@ IFaucetCb & \\\hline
 
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint32 & \_{}deployedPadawansCounter & Initialized to 0  \\\hline
- & & used in @1.Demiurge.getStats\\\hline
-uint32 & \_{}deployedProposalsCounter & Initialized to 0  \\\hline
- & & used in @1.Demiurge.getStats\\\hline
- & & assigned in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
-uint16 & \_{}version & Initialized to 3  \\\hline
- & & used in @1.Demiurge.getStats\\\hline
-address & \_{}addrStore &  \\\hline
- & & used in @1.Demiurge.getStored\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
- & & assigned in @1.Demiurge.:constructor\\\hline
- & & used in @1.Demiurge.:constructor\\\hline
-address & \_{}addrDensRoot &  \\\hline
- & & assigned in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.getStored\\\hline
- & & used in @1.Demiurge.deployReserveProposal\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
-address & \_{}addrTokenRoot &  \\\hline
- & & assigned in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.getStored\\\hline
- & & used in @1.Demiurge.deployPadawan\\\hline
-address & \_{}addrFaucet &  \\\hline
- & & assigned in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.updateAddr\\\hline
- & & used in @1.Demiurge.getStored\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
-uint8 & \_{}checkList &  \\\hline
- & & assigned in @1.Demiurge.\_{}passCheck\\\hline
- & & used in @1.Demiurge.\_{}passCheck\\\hline
- & & assigned in @1.Demiurge.\_{}createChecks\\\hline
- & & used in @1.Demiurge.\_{}createChecks\\\hline
- & & used in @1.Demiurge.\_{}allCheckPassed\\\hline
-NewProposal [] & \_{}newProposals &  \\\hline
- & & used in @1.Demiurge.deployReserveProposal\\\hline
- & & used in @1.Demiurge.deployReserveProposal\\\hline
- & & assigned in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
-uint8 & \_{}getBalancePendings & Initialized to 0  \\\hline
- & & assigned in @1.Demiurge.getTotalDistributedCb\\\hline
- & & used in @1.Demiurge.getTotalDistributedCb\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
- & & assigned in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
- & & used in @1.Demiurge.\_{}beforeProposalDeploy\\\hline
-uint128 & \_{}totalVotes & Initialized to 0  \\\hline
- & & assigned in @1.Demiurge.getTotalDistributedCb\\\hline
- & & used in @1.Demiurge.getTotalDistributedCb\\\hline
- & & used in @1.Demiurge.\_{}deployProposals\\\hline
-\end{tabular}
-\fi
-
 
 \begin{lstlisting}[firstnumber=35]
     uint32 _deployedPadawansCounter = 0;
@@ -190,22 +128,21 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Constructor}
 
 \begin{itemize}
-\item \issueCritical{Demiurge constructor}{No test is performed to
-  verify the sender in the case {\tt msg.sender != address(0)}. An
-  attacker could use it to deploy the contract himself for another
-  user, providing its own {\tt addrStore}, i.e. with his own code for
-  most contracts.}
+\item \issueCritical{Administrative Take-over in {\tt
+    Demiurge.constructor}}{No test is performed to verify the sender
+  in the case {\tt msg.sender != address(0)}. An attacker could use it
+  to deploy the contract himself for another user, providing its own
+  {\tt addrStore}, i.e. with his own code for most contracts.}
+\item \issueMajor{No initialization check performed in {\tt
+    Demiurge.constructor}}{The {\tt \_createChecks} function gives the
+  false feeling the checks are performed for initialization of the
+  Padawan and Proposal codes. However, the checks are not performed in
+  the functions where they would be required. No attempt is done to
+  perform the same checks for addresses.}
 \item Minor issue (readability): a number is used as an error, a
   constant should be defined instead.
 \item Minor issue (duplicate code): the check {\tt addrStore $!=$
   address(0)} is performed twice, the second one is useless.
-\item \issueMajor{No initialization check performed}{The {\tt
-    \_createChecks} function gives the false feeling the checks are
-  performed for initialization of the Padawan and Proposal
-  codes. However, the checks are not performed in the functions where
-  they would be required. No attempt is done to perform the same
-  checks for addresses.}
-\item TODO
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=82]
@@ -251,7 +188,10 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function deployReserveProposal}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should check that {\tt \_codePadawan} and {\tt \_codeProposal}
+  have been correctly initialized
+\item Minor issue: there is no need to store {\tt \_codePadawan} in the proposal struct as it is
+  already a global variable.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=112]
@@ -281,7 +221,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function getStats}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=214]
@@ -295,7 +235,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function getStored}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=198]
@@ -319,7 +259,20 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function getTotalDistributedCb}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check in {\tt
+    Demiurge.getTotalDistributedCb}}{Anybody can send this message. An
+  attacker could use it to force the deployment of all proposals with
+  a wrong number of total votes.}
+\item \issueCritical{No value check in {\tt
+    Demiurge.getTotalDistributedCb}}{This function is in charge of
+  deploying all pending proposals. It should check that the sender
+  gave enough value to perform these deployments before the end of the
+  action phase. Otherwise, the action phase may succeed, all proposal
+  will be removed from the array of proposals, but the deployments
+  will fail by lack of gas.}
+\item Minor issue: this function should send back the remaining gas
+  not consumed to its called, especially if the caller gave a lot of
+  gas to account for the deployments of multiple proposals.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=148]
@@ -335,7 +288,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function updateAddr}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: add {\tt \_passCheck} for addresses too.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=174]
@@ -354,7 +307,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function updateCode}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=185]
@@ -376,7 +329,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function \_{}allCheckPassed}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=62]
@@ -388,7 +341,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function \_{}beforeProposalDeploy}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=134]
@@ -410,7 +363,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function \_{}createChecks}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=54]
@@ -422,7 +375,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function \_{}deployProposals}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=156]
@@ -446,7 +399,7 @@ uint128 & \_{}totalVotes & Initialized to 0  \\\hline
 \subsection{Function \_{}passCheck}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=58]
