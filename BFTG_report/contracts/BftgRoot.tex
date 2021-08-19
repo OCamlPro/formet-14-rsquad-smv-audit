@@ -10,6 +10,10 @@ In file {\tt BftgRoot.sol}
 
 \section{Contract Inheritance}
 
+\begin{itemize}
+\item Minor issue: {\tt Checks} is not currently used. Remove it if
+  there is no plan to use it.
+\end{itemize}
 
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 Base & \\\hline
@@ -33,33 +37,6 @@ Checks & \\\hline
 \end{lstlisting}
 
 \section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}addrBftgRootStore &  \\\hline
- & & used in @1.BftgRoot.deployContest\\\hline
- & & assigned in @1.BftgRoot.:constructor\\\hline
- & & used in @1.BftgRoot.:constructor\\\hline
-bool & \_{}inited & Initialized to false \\\hline
- & & assigned in @1.BftgRoot.\_{}onInit\\\hline
- & & used in @1.BftgRoot.\_{}onInit\\\hline
- & & used in @1.BftgRoot.\_{}onInit\\\hline
-mapping (address =$>$ JuryGroupPending) & \_{}juryGroupPendings &  \\\hline
- & & assigned in @1.BftgRoot.registerMemberJuryGroup\\\hline
- & & used in @1.BftgRoot.registerMemberJuryGroup\\\hline
- & & assigned in @1.BftgRoot.getMembersCallback\\\hline
- & & used in @1.BftgRoot.getMembersCallback\\\hline
- & & used in @1.BftgRoot.getMembersCallback\\\hline
- & & used in @1.BftgRoot.getMembersCallback\\\hline
- & & assigned in @1.BftgRoot.:onBounce\\\hline
- & & used in @1.BftgRoot.:onBounce\\\hline
- & & used in @1.BftgRoot.:onBounce\\\hline
- & & used in @1.BftgRoot.:onBounce\\\hline
- & & used in @1.BftgRoot.:onBounce\\\hline
- & & used in @1.BftgRoot.:onBounce\\\hline
-\end{tabular}
-\fi
 
 
 \begin{lstlisting}[firstnumber=34]
@@ -92,12 +69,21 @@ mapping (address =$>$ JuryGroupPending) & \_{}juryGroupPendings &  \\\hline
 
 \subsection{Constructor}
 
-\issueCritical{Constructor for BftgRoot (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-
-loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-loren ipsum loren ipsum loren ipsum }
 \begin{itemize}
-\item TODO
+\item \issueCritical{Administrative Take-over in {\tt
+    BftgRoot.constructor}}{No test is performed to verify the sender
+  in the case {\tt msg.sender != address(0)}. An attacker could use it
+  to deploy the contract himself for another user, providing its own
+  {\tt addrBftgRootStore}, i.e. with his own code for most
+  contracts. Fix: contract should be deployed by the same public key
+  as {\tt tvm.pubkey} or the sender should be the same as a static
+  variable {\tt \_deployer}.}
+\item \issueMajor{No initialization check performed in {\tt
+    BftgRoot.constructor}}{The {\tt \_createChecks} function gives the
+  false feeling the checks are performed for initialization of the
+  Padawan and Proposal codes. However, the checks are not performed in
+  the functions where they would be required. No attempt is done to
+  perform the same checks for addresses.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=36]
@@ -126,7 +112,10 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{OnBounce function}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should check the message name being
+  bounced.
+\item Minor issue (readability): {\tt \_} should be avoided as a
+  variable name.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=83]
@@ -145,7 +134,12 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function deployContest}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{tvm.accept without check in {\tt
+    BftgRoot.deployContest}}{An attacker could drain the contract
+  balance by sending many messages {\tt deployContest}. Moreover, some
+  of the arguments have unbounded size ({\tt tags}), providing a way
+  to make the attack even more efficient by sending large message with
+  high gas cost. Fix: the sender should pay the gas.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=98]
@@ -161,7 +155,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function deployJuryGroup}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that there is enough
+  value in the message to perform the deployment of the message.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=112]
@@ -177,7 +172,12 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getMembersCallback}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
+\item Minor issue (gas cost): the argument {\tt members} is not used
+  in this function. It looks like asking for the list of members is
+  only a way to check for the existence of the group. A less expensive
+  function should be used instead of asking for the full list.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=130]
@@ -193,7 +193,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getStored}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=142]
@@ -209,7 +209,19 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function registerMemberJuryGroup}
 
 \begin{itemize}
-\item TODO
+\item \issueMajor{Non-reentrant in {\tt
+    BftgRoot.registerMemberJuryGroup}} {If several {\tt
+    registerMemberJuryGroup} messages are sent together for the same
+  {\tt JuryGroup}, only the last one is taken into account, in {\tt
+    getMembersCallback}. This issue might lead to missing members, or
+  to balance problems, given that multiple messages sent to {\tt
+    JuryGroup.registerMember} seems to be way to increase the balance
+  for a particular member. Fix: either the contract should deal with
+  multiple registration at the same time, or {\tt
+    registerMemberJuryGroup} should immediately fail if a registration
+  is already in progress for the same group.  }
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=120]
@@ -227,7 +239,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function updateAddr}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=77]
@@ -237,7 +249,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function updateCode}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=62]
@@ -263,7 +275,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}createChecks}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=21]
@@ -275,7 +287,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}onInit}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=56]

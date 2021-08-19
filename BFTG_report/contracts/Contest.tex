@@ -10,6 +10,10 @@ In file {\tt Contest.sol}
 
 \section{Contract Inheritance}
 
+\begin{itemize}
+\item Minor issue: {\tt Checks} is not currently used. Remove it if
+  there is no plan to use it.
+\end{itemize}
 
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 JuryGroupResolver & \\\hline
@@ -18,9 +22,11 @@ IBftgRootStoreCallback & \\\hline
 Checks & \\\hline
 \end{tabular}
 
-
 \section{Constant Definitions}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=15]
     uint8 constant CHECK_JURY_GROUP_CODE = 1;
@@ -28,15 +34,9 @@ Checks & \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}deployer &  \\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.:constructor\\\hline
-\end{tabular}
-\fi
+\begin{itemize}
+\item OK
+\end{itemize}
 
 
 \begin{lstlisting}[firstnumber=28]
@@ -45,98 +45,9 @@ address & \_{}deployer &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-string [] & \_{}tags &  \\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
- & & assigned in @18.Contest.:constructor\\\hline
- & & used in @18.Contest.:constructor\\\hline
-mapping (address =$>$ bool) & \_{}tagsPendings &  \\\hline
- & & used in @18.Contest.getMembersCallback\\\hline
- & & assigned in @18.Contest.getMembersCallback\\\hline
- & & used in @18.Contest.getMembersCallback\\\hline
- & & used in @18.Contest.getMembersCallback\\\hline
- & & assigned in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.:onBounce\\\hline
- & & assigned in @18.Contest.:onBounce\\\hline
- & & used in @18.Contest.:onBounce\\\hline
- & & used in @18.Contest.:onBounce\\\hline
-mapping (address =$>$ Member) & \_{}jury &  \\\hline
- & & used in @18.Contest.vote\\\hline
- & & used in @18.Contest.reveal\\\hline
- & & assigned in @18.Contest.getMembersCallback\\\hline
- & & used in @18.Contest.getMembersCallback\\\hline
-uint128 & \_{}prizePool &  \\\hline
- & & used in @18.Contest.\_{}calcPointValue\\\hline
- & & assigned in @18.Contest.:constructor\\\hline
- & & used in @18.Contest.:constructor\\\hline
-uint32 & \_{}underwayDuration &  \\\hline
- & & used in @18.Contest.\_{}changeStage\\\hline
- & & assigned in @18.Contest.:constructor\\\hline
- & & used in @18.Contest.:constructor\\\hline
-uint32 & \_{}underwayEnds &  \\\hline
- & & assigned in @18.Contest.\_{}changeStage\\\hline
- & & used in @18.Contest.\_{}changeStage\\\hline
-bool & \_{}inited & Initialized to false \\\hline
- & & assigned in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
- & & used in @18.Contest.\_{}onInit\\\hline
-ContestStage & \_{}stage &  \\\hline
- & & used in @18.Contest.vote\\\hline
- & & used in @18.Contest.submit\\\hline
- & & used in @18.Contest.reveal\\\hline
- & & assigned in @18.Contest.changeStage\\\hline
- & & used in @18.Contest.changeStage\\\hline
- & & assigned in @18.Contest.\_{}changeStage\\\hline
- & & used in @18.Contest.\_{}changeStage\\\hline
- & & used in @18.Contest.\_{}changeStage\\\hline
- & & assigned in @18.Contest.:constructor\\\hline
- & & used in @18.Contest.:constructor\\\hline
-mapping (uint32 =$>$ Submission) & \_{}submissions &  \\\hline
- & & assigned in @18.Contest.submit\\\hline
- & & used in @18.Contest.submit\\\hline
- & & used in @18.Contest.calcRewards\\\hline
-uint32 & \_{}submissionsCounter &  \\\hline
- & & assigned in @18.Contest.submit\\\hline
- & & used in @18.Contest.submit\\\hline
- & & used in @18.Contest.submit\\\hline
- & & used in @18.Contest.submit\\\hline
- & & used in @18.Contest.\_{}calcPointValue\\\hline
-mapping (address =$>$ mapping (uint32 =$>$ HiddenVote)) & \_{}juryHiddenVotes &  \\\hline
- & & assigned in @18.Contest.vote\\\hline
- & & used in @18.Contest.vote\\\hline
- & & used in @18.Contest.vote\\\hline
- & & used in @18.Contest.reveal\\\hline
- & & used in @18.Contest.getHiddenVotesByAddress\\\hline
-mapping (uint32 =$>$ Vote []) & \_{}submissionVotes &  \\\hline
- & & used in @18.Contest.reveal\\\hline
- & & used in @18.Contest.calcRewards\\\hline
- & & used in @18.Contest.calcRewards\\\hline
-uint128 & \_{}pointValue &  \\\hline
- & & used in @18.Contest.calcRewards\\\hline
- & & assigned in @18.Contest.\_{}calcPointValue\\\hline
- & & used in @18.Contest.\_{}calcPointValue\\\hline
-mapping (address =$>$ Reward) & \_{}rewards &  \\\hline
- & & assigned in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & used in @18.Contest.stakePartisipantReward\\\hline
- & & assigned in @18.Contest.claimPartisipantReward\\\hline
- & & used in @18.Contest.claimPartisipantReward\\\hline
- & & used in @18.Contest.claimPartisipantReward\\\hline
- & & used in @18.Contest.claimPartisipantReward\\\hline
- & & used in @18.Contest.claimPartisipantReward\\\hline
- & & assigned in @18.Contest.calcRewards\\\hline
- & & used in @18.Contest.calcRewards\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=25]
     string[] public _tags;
@@ -199,12 +110,9 @@ mapping (address =$>$ Reward) & \_{}rewards &  \\\hline
 
 \subsection{Constructor}
 
-\issueCritical{Constructor for Contest (fake)}{loren ipsum  loren ipsum  loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-
-loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum loren ipsum
-loren ipsum loren ipsum loren ipsum }
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=34]
@@ -226,7 +134,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{OnBounce function}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should check the message name being
+  bounced.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=64]
@@ -243,7 +152,26 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function calcRewards}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Not reentrant in {\tt Contest.calcRewards}}{This
+  function is not reentrant, meaning that an attacker could call it
+  several times to modify the rewards given to the participants.
+  The function should:
+  \begin{itemize}
+  \item Check that the voting stage is over, and that the reward stage
+    is not yet started
+  \item Initialize the {\tt \_rewards} table to 0 before starting
+    adding rewards to it (in case a computation was already done)
+  \end{itemize}
+}
+\item \issueMajor{Wrong computation in {\tt Contest.calcRewards}} {The
+  interpretation of ``point value'' differs in {\tt calcRewards} and
+  {\tt \_calcPointValue}. Indeed, in {\tt \_calcPointValue}, the
+  ``point value'' is the value of a point for the {\bf average}
+  submission score, whereas {\tt calcRewards} uses it for every point
+  of a submission vote, i.e. not the average. Though the computation
+  in {\tt \_calcPointValue} is not the final one, this difference in
+  interpretation may lead to rewards much higher than the ones
+  expected.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=175]
@@ -264,7 +192,10 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function changeStage}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Missing permission checks in {\tt
+    Contest.changeStage}}{No permission checks are performed in this
+  function. An attacker could freely change the stage of the contest,
+  and drain the message balance using {\tt tvm.accept}.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=234]
@@ -277,7 +208,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function claimPartisipantReward}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: fix spelling of {\tt participant} instead of {\tt
+  partisipant}.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=197]
@@ -292,7 +224,7 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getHiddenVotesByAddress}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=145]
@@ -304,6 +236,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function getMembersCallback}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -340,6 +274,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function reveal}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -360,6 +296,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function stakePartisipantReward}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -383,6 +321,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function submit}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -424,6 +364,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function vote}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -446,6 +388,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}calcPointValue}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 
@@ -459,6 +403,8 @@ loren ipsum loren ipsum loren ipsum }
 \subsection{Function \_{}changeStage}
 
 \begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \item TODO
 \end{itemize}
 

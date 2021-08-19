@@ -5,24 +5,12 @@
 
 \section{Overview}
 
-
 In file {\tt Checks.sol}
 
+This contract is now used directly, but only inherited by other
+contracts, such as {\tt BftgRoot}. However, the checks are not used.
+
 \section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-uint8 & \_{}checkList &  \\\hline
- & & assigned in @1.BftgRoot.\_{}createChecks\\\hline
- & & used in @1.BftgRoot.\_{}createChecks\\\hline
- & & assigned in @18.Contest.\_{}createChecks\\\hline
- & & used in @18.Contest.\_{}createChecks\\\hline
- & & assigned in @5.Checks.\_{}passCheck\\\hline
- & & used in @5.Checks.\_{}passCheck\\\hline
- & & used in @5.Checks.\_{}isCheckListEmpty\\\hline
-\end{tabular}
-\fi
 
 
 \begin{lstlisting}[firstnumber=4]
@@ -34,6 +22,14 @@ uint8 & \_{}checkList &  \\\hline
 
 \subsection{Modifier checksEmpty}
 
+\begin{itemize}
+\item Minor issue: a {\tt tvm.accept} should not be used without
+  checking the origin of the message. Here, the checks are only done
+  on the current initialization of the contract. In general, such a
+  modifier could be used by an attacker to drain the balance of the
+  contract. We advise to either remove the modifier, or remove the
+  call to {\tt tvm.accept}.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=12]
     modifier checksEmpty() {
@@ -49,7 +45,7 @@ uint8 & \_{}checkList &  \\\hline
 \subsection{Function \_{}isCheckListEmpty}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=9]
@@ -61,7 +57,7 @@ uint8 & \_{}checkList &  \\\hline
 \subsection{Function \_{}passCheck}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=6]
