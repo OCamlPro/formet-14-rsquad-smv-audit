@@ -8,28 +8,6 @@
 
 In file {\tt PadawanResolver.sol}
 
-\section{Variable Definitions}
-
-\begin{lstlisting}[firstnumber=8]
-    TvmCell _codePadawan;
-\end{lstlisting}
-
-\section{Public Method Definitions}
-
-\subsection{Function resolvePadawan}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=10]
-    function resolvePadawan(address owner) public view returns (address addrPadawan) {
-        TvmCell state = _buildPadawanState(owner);
-        uint256 hashState = tvm.hash(state);
-        addrPadawan = address.makeAddrStd(0, hashState);
-    }
-\end{lstlisting}
-
 \section{Internal Method Definitions}
 
 

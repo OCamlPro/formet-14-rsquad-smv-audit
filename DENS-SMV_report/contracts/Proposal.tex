@@ -11,42 +11,6 @@ In file {\tt Proposal.sol}
 This contract is used to collect the votes for a particular
 proposal. Votes are sent by {\tt Padawan} contracts.
 
-\section{Static Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=13]
-    address static _deployer;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=14]
-    string static _title;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=16]
-    address public _addrClient;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=18]
-    ProposalInfo public _proposalInfo;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=20]
-    ProposalResults _results;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=21]
-    VoteCountModel _voteCountModel;
-\end{lstlisting}
-
 \section{Constructor Definitions}
 
 
@@ -91,56 +55,6 @@ proposal. Votes are sent by {\tt Padawan} contracts.
 \end{lstlisting}
 
 \section{Public Method Definitions}
-
-
-\subsection{Function getAll}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=168]
-    function getAll() public view override returns (ProposalInfo info) {
-        info = _proposalInfo;
-    }
-\end{lstlisting}
-
-\subsection{Function getCurrentVotes}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=181]
-    function getCurrentVotes() external override view returns (uint32 votesFor, uint32 votesAgainst) {
-        return (_proposalInfo.votesFor, _proposalInfo.votesAgainst);
-    }
-\end{lstlisting}
-
-\subsection{Function getInfo}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=177]
-    function getInfo() public view returns (ProposalInfo info) {
-        info = _proposalInfo;
-    }
-\end{lstlisting}
-
-\subsection{Function getVotingResults}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=172]
-    function getVotingResults() public view returns (ProposalResults vr) {
-        require(_proposalInfo.state > ProposalState.Ended, Errors.VOTING_HAS_NOT_ENDED);
-        vr = _results;
-    }
-\end{lstlisting}
 
 \subsection{Function queryStatus}
 
@@ -199,19 +113,6 @@ proposal. Votes are sent by {\tt Padawan} contracts.
     }
 \end{lstlisting}
 
-\subsection{Function wrapUp}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=49]
-    function wrapUp() external override {
-        _wrapUp();
-        msg.sender.transfer(0, false, 64);
-    }
-\end{lstlisting}
-
 \section{Internal Method Definitions}
 
 
@@ -230,35 +131,6 @@ proposal. Votes are sent by {\tt Padawan} contracts.
             varInit: {_deployer: _deployer, _owner: owner},
             code: _codePadawan
         });
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}calculateVotes}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=132]
-    function _calculateVotes(
-        uint32 yes,
-        uint32 no
-    ) private view returns (bool) {
-        bool passed = false;
-        passed = _softMajority(yes, no);
-        return passed;
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}changeState}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=150]
-    function _changeState(ProposalState state) private inline {
-        _proposalInfo.state = state;
     }
 \end{lstlisting}
 

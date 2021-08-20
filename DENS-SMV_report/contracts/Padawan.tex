@@ -11,20 +11,6 @@ This contract is used by a user to collect his voting rights (within a
 token wallet), and vote for proposals. Voting rights can be added, and
 reclaimed if not currently used.
 
-\section{Static Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=18]
-    address static _deployer;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=19]
-    address static _owner;
-\end{lstlisting}
-
 \section{Variable Definitions}
 
 \begin{itemize}
@@ -63,52 +49,6 @@ reclaimed if not currently used.
     uint32 _lockedVotes;
 \end{lstlisting}
 
-\section{Modifier Definitions}
-
-
-\subsection{Modifier onlyOwner}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=34]
-    modifier onlyOwner() {
-        require(msg.sender == _owner, Errors.NOT_AUTHORIZED_CONTRACT);
-        _;
-    }
-\end{lstlisting}
-
-\subsection{Modifier onlyTokenRoot}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=39]
-    modifier onlyTokenRoot() {
-        require(msg.sender == _addrTokenRoot, Errors.INVALID_CALLER);
-        _;
-    }
-\end{lstlisting}
-
-\section{Constructor Definitions}
-
-
-\subsection{Constructor}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=46]
-    constructor(address addrTokenRoot) public onlyContract {
-        require(_deployer == msg.sender, Errors.ONLY_DEPLOYER);
-        _addrTokenRoot = addrTokenRoot;
-        _createTokenAccount();
-    }
-\end{lstlisting}
-
 \section{Public Method Definitions}
 
 
@@ -133,116 +73,6 @@ reclaimed if not currently used.
         
         _updateLockedVotes();
 
-        _owner.transfer(0, false, 64);
-    }
-\end{lstlisting}
-
-\subsection{Function depositTokens}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=172]
-    function depositTokens() external onlyOwner view {
-        require(msg.value >= DEPOSIT_TOKENS_FEE, Errors.MSG_VALUE_TOO_LOW);
-        require(_tipAccount.addr != address(0), Errors.ACCOUNT_DOES_NOT_EXIST);
-
-        ITokenWallet(_tipAccount.addr).getBalance_InternalOwner
-            {value: 0, flag: 64, bounce: true}
-            (tvm.functionId(onGetBalance));
-    }
-\end{lstlisting}
-
-\subsection{Function getActiveProposals}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=228]
-    function getActiveProposals() public view returns (mapping(address => uint32) activeProposals) {
-        activeProposals = _activeProposals;
-    }
-\end{lstlisting}
-
-\subsection{Function getAddresses}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=224]
-    function getAddresses() public view returns (address ownerAddress) {
-        ownerAddress = _owner;
-    }
-\end{lstlisting}
-
-\subsection{Function getAll}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=207]
-    function getAll() external view returns (TipAccount tipAccount, uint32 reqVotes, uint32 totalVotes, uint32 lockedVotes) {
-        tipAccount = _tipAccount;
-        reqVotes = _requestedVotes;
-        totalVotes =  _totalVotes;
-        lockedVotes = _lockedVotes;
-    }
-\end{lstlisting}
-
-\subsection{Function getTipAccount}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=214]
-    function getTipAccount() external view returns (TipAccount tipAccount) {
-        tipAccount = _tipAccount;
-    }
-\end{lstlisting}
-
-\subsection{Function getVoteInfo}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=218]
-    function getVoteInfo() external view returns (uint32 reqVotes, uint32 totalVotes, uint32 lockedVotes) {
-        reqVotes = _requestedVotes;
-        totalVotes =  _totalVotes;
-        lockedVotes = _lockedVotes;
-    }
-\end{lstlisting}
-
-\subsection{Function onGetBalance}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=181]
-    function onGetBalance(uint128 balance) public onlyContract {
-        require(_tipAccount.addr == msg.sender, Errors.NOT_AUTHORIZED_CONTRACT);
-        _tipAccount.balance = balance;
-        _totalVotes = uint32(balance);
-        _owner.transfer(0, false, 64);
-    }
-\end{lstlisting}
-
-\subsection{Function onTokenWalletDeploy}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=192]
-    function onTokenWalletDeploy(address ownerAddress) public onlyTokenRoot {
-        _tipAccount = TipAccount(ownerAddress, 0);
         _owner.transfer(0, false, 64);
     }
 \end{lstlisting}
@@ -281,51 +111,6 @@ reclaimed if not currently used.
                 {value: QUERY_STATUS_FEE, bounce: true, flag: 1}
                 ();
             optActiveProposal = _activeProposals.next(addrActiveProposal);
-        }
-    }
-\end{lstlisting}
-
-\subsection{Function rejectVote}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=87]
-    function rejectVote(uint32 votesCount, uint16 errorCode) external onlyContract {
-        votesCount; errorCode;
-
-        // TODO: better to check is it proposal or not
-        optional(uint32) optActiveProposal = _activeProposals.fetch(msg.sender);
-        require(optActiveProposal.hasValue());
-        uint32 activeProposalVotes = optActiveProposal.get();
-        if (activeProposalVotes == 0) {
-            delete _activeProposals[msg.sender];
-        }
-
-        _owner.transfer(0, false, 64);
-    }
-\end{lstlisting}
-
-\subsection{Function updateStatus}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=127]
-    function updateStatus(ProposalState state) external onlyContract {
-        optional(uint32) optActiveProposal = _activeProposals.fetch(msg.sender);
-        require(optActiveProposal.hasValue());
-        tvm.accept();
-
-        if (state >= ProposalState.Ended) {
-            delete _activeProposals[msg.sender];
-            _updateLockedVotes();
-        }
-
-        if (_requestedVotes != 0 && _requestedVotes <= _totalVotes - _lockedVotes) {
-            _unlockDeposit();
         }
     }
 \end{lstlisting}
@@ -372,21 +157,6 @@ reclaimed if not currently used.
 
 \section{Internal Method Definitions}
 
-
-\subsection{Function \_{}createTokenAccount}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=197]
-    function _createTokenAccount() private view {
-        ITokenRoot(_addrTokenRoot).deployEmptyWallet
-            {value: 2 ton, flag: 1, bounce: true}
-            (tvm.functionId(onTokenWalletDeploy), 0, 0, address(this).value, 1 ton);
-    }
-\end{lstlisting}
-
 \subsection{Function \_{}unlockDeposit}
 
 \begin{itemize}
@@ -402,26 +172,5 @@ reclaimed if not currently used.
         _totalVotes -= _requestedVotes;
         _requestedVotes = 0;
         _returnTo = address(0);
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}updateLockedVotes}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=155]
-    function _updateLockedVotes() private inline {
-        optional(address, uint32) optActiveProposal = _activeProposals.min();
-        uint32 lockedVotes;
-        while (optActiveProposal.hasValue()) {
-            (address addr, uint32 votes) = optActiveProposal.get();
-            if (votes > lockedVotes) {
-                lockedVotes = votes;
-            }
-            optActiveProposal = _activeProposals.next(addr);
-        }
-        _lockedVotes = lockedVotes;
     }
 \end{lstlisting}

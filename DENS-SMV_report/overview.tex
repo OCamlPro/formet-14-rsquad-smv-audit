@@ -1,10 +1,75 @@
 
-The Location section should be read as:
-The source code is available at \url{https://github.com/RSquad/dens-smv} at branch master with
-hash code equal to fbdfe4bca3c372b02cacf9788b4ad37112d0da2c
-and
-\url{https://github.com/RSquad/BFTG} (SMV part only) at branch master with hash code equal to
-7c6ec7d811bcc1f228a3499ab19f6d20652ca94b
 
+\section{Source code location}
 
+The source code is available
+at \url{https://github.com/RSquad/dens-smv} at branch master with hash
+code equal to fbdfe4bca3c372b02cacf9788b4ad37112d0da2c
 
+\section{Architecture}
+
+The project implements a system of voting for proposal with
+soft-majority, where voting rights are represented as a TIP-3 token
+(with a root token contract and wallets associated with each users).
+
+The project contains the following contracts:
+
+\begin{description}
+\item[\bf Demiurge:] this contract is in charge of the deployment of {\tt Padawan}
+contracts and {\tt Proposal} contracts. It acts as a central hub for
+such interactions.
+\item[\bf Proposal:] this contract corresponds to a proposal for which users
+have to vote in a 7 days period, using their voting rights.
+\item[\bf Padawan:] this contract belongs to a user that is expected to vote for
+the different proposals. A wallet is associated with this contract to
+hold the user's voting rights.
+\item[\bf Faucet:] this contract is used to distribute the voting rights
+to user and deploy their wallets.
+\item[\bf DemiurgeStore:] this contract is in charge of storing the code
+of all deployable contracts and shared addresses. It acts as a central
+configuration for the infrastructure.
+\item[\bf Base:] this contract is inherited by all other contracts and contains
+constant definitions, and modifiers.
+\item[\bf {\em Contract}Resolver:] these contracts are used to store the code of a
+particular contract, and provide functions to compute the addresses of such
+contracts and deploy them;
+\end{description}
+
+\section{Message Sequences}
+
+\subsection{Vote}
+
+\begin{itemize}
+\item User sends a {\tt vote} message (from multisig) to his {\tt Padawan} contract to vote for a proposal
+\item The {\tt Padawan} contract verifies that user has not yet used all his voting rights for this proposal, and sends a {\tt vote} message to the proposal
+\item On reception of the {\tt vote} message, the {\tt Proposal} contract:
+\begin{itemize}
+\item checks whether the proposal is still ongoing or not
+\item  sends a {\tt confirmVote} message or a {\tt rejectVote} message to the {\tt Padawan} contract
+\item checks the result of the vote (if it is ended or if enough votes have been issued)
+\end{itemize}
+\end{itemize}
+
+\subsection{Reclaim Deposits}
+
+\begin{itemize}
+\item User wants to recover some deposits for voting rights that are not currently used in a proposal, user sends a {\tt reclaimDeposit} message to his {\tt Padawan} contract
+\item On reception of the {\tt reclaimDeposit} message, the {\tt Padawan} contract:
+\begin{itemize}
+\item Checks whether enough voting rights are ``free'', and can be sent back
+\item Send a {\tt queryStatus} message to all active {\tt Proposal} contracts
+\end{itemize}
+\item On reception of a {\tt queryStatus} message, a {\tt Proposal} contract sends back an {\tt updateStatus} message to the {\tt Padawan} contract
+\item On reception of the {\tt updateStatus} message, the {\tt Padawan} contract frees the votes for ended proposals. If enough voting rights are ``free'', the tokens are sent back by sending a {\tt transfer} message to the wallet contract
+\end{itemize}
+
+\subsection{Providing Voting Rights to a User}
+
+\begin{itemize}
+\item The administrator (owner of the {\tt Faucet} contract) sends a {\tt changeBalance} message to the {\tt Faucet} contract associating voting rights to a pubkey
+\item The user sends a {\tt claimTokens} message to the {\tt Faucet} contract, providing the address of the wallet associated with his {\tt Padawan} contract
+\item If the voting rights of the corresponding pubkey exists, the {\tt Faucet} contract sends a {\tt transfer} message to its wallet to transfer the tokens to the user's wallet
+\item The user sends a {\tt depositTokens} message to his {\tt Padawan} contract
+\item The {\tt Padawan} contracts sends a {\tt getBalance\_InternalOwner} message to its associated wallet
+\item The wallet sends back a {\tt onGetBalance} message to the {\tt Padawan} contract with the updated voting rights of the user
+\end{itemize}

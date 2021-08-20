@@ -8,105 +8,7 @@
 
 In file {\tt Contest.sol}
 
-\section{Contract Inheritance}
-
-\begin{itemize}
-\item Minor issue: {\tt Checks} is not currently used. Remove it if
-  there is no plan to use it.
-\end{itemize}
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-JuryGroupResolver & \\\hline
-IJuryGroupCallback & \\\hline
-IBftgRootStoreCallback & \\\hline
-Checks & \\\hline
-\end{tabular}
-
-\section{Constant Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=15]
-    uint8 constant CHECK_JURY_GROUP_CODE = 1;
-\end{lstlisting}
-
-\section{Static Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-
-\begin{lstlisting}[firstnumber=28]
-    address static _deployer;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=25]
-    string[] public _tags;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=26]
-    mapping(address => bool) _tagsPendings;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=27]
-    mapping(address => Member) public _jury;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=30]
-    uint128 public _prizePool;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=31]
-    uint32 public _underwayDuration;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=32]
-    uint32 public _underwayEnds;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=45]
-    bool public _inited = false;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=104]
-    ContestStage public _stage;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=118]
-    mapping(uint32 => Submission) public _submissions;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=119]
-    uint32 _submissionsCounter;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=132]
-    mapping(address => mapping(uint32 => HiddenVote)) public _juryHiddenVotes;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=153]
-    mapping(uint32 => Vote[]) public _submissionVotes;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=171]
-    uint128 _pointValue;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=173]
-    mapping(address => Reward) public _rewards;
-\end{lstlisting}
-
 \section{Constructor Definitions}
-
 
 \subsection{Constructor}
 
@@ -217,18 +119,6 @@ Checks & \\\hline
     }
 \end{lstlisting}
 
-\subsection{Function getHiddenVotesByAddress}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=145]
-    function getHiddenVotesByAddress(address juryAddr) public view returns (mapping(uint32 => HiddenVote) hiddenVotes) {
-        hiddenVotes = _juryHiddenVotes[juryAddr];
-    }
-\end{lstlisting}
-
 \subsection{Function getMembersCallback}
 
 \begin{itemize}
@@ -250,21 +140,6 @@ Checks & \\\hline
         if(_tagsPendings.empty()) {
             _changeStage(ContestStage.Underway);
         }
-    }
-\end{lstlisting}
-
-\subsection{Function hashVote}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=223]
-    function hashVote(uint32 submissionId, uint8 score, string comment) public pure returns (uint hash) {
-        TvmBuilder builder;
-        builder.store(submissionId, score, comment);
-        TvmCell cell = builder.toCell();
-        hash = tvm.hash(cell);
     }
 \end{lstlisting}
 
@@ -337,16 +212,6 @@ Checks & \\\hline
     }
 \end{lstlisting}
 
-\subsection{Function updateAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=81]
-    function updateAddr(ContractAddr kind, address addr) external override {}
-\end{lstlisting}
-
 \subsection{Function updateCode}
 
 \begin{itemize}
@@ -407,19 +272,6 @@ Checks & \\\hline
 \section{Internal Method Definitions}
 
 
-\subsection{Function \_{}calcPointValue}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=188]
-    function _calcPointValue() private inline {
-        // TODO: change the formula
-        _pointValue = _prizePool / (_submissionsCounter * 10);
-    }
-\end{lstlisting}
-
 \subsection{Function \_{}changeStage}
 
 \begin{itemize}
@@ -434,42 +286,5 @@ Checks & \\\hline
             _underwayEnds = uint32(now) + _underwayDuration;
         }
         _stage = stage;
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}createChecks}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=17]
-    function _createChecks() private inline {
-        _checkList = CHECK_JURY_GROUP_CODE;
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}onInit}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=47]
-    function _onInit() private {
-        if(_isCheckListEmpty() && !_inited) {
-            _inited = true;
-            for(uint8 i = 0; i < _tags.length; i++) {
-                TvmCell state = _buildJuryGroupState(_tags[i], _deployer);
-                uint256 hashState = tvm.hash(state);
-                address addrJuryGroup = address.makeAddrStd(0, hashState);
-                _tagsPendings[addrJuryGroup] = true;
-                IJuryGroup(addrJuryGroup).getMembers{
-                    value: 0.2 ton,
-                    flag: 1,
-                    bounce: true
-                }();
-            }
-        }
     }
 \end{lstlisting}

@@ -1,7 +1,17 @@
 
-The Location section should be read as:
-The source code is available at \url{https://github.com/RSquad/dens-smv} at branch master with
-hash code equal to fbdfe4bca3c372b02cacf9788b4ad37112d0da2c
-and
-\url{https://github.com/RSquad/BFTG} (SMV part only) at branch master with hash code equal to
+\section{Source code location}
+
+The source code is available
+\url{https://github.com/RSquad/BFTG} at branch master with hash code equal to
 7c6ec7d811bcc1f228a3499ab19f6d20652ca94b
+
+\section{Architecture}
+
+The architecture is mostly similar to the one detailed in the DENS-SMV
+audit report, with only a few differences:
+
+\begin{itemize}
+\item The {\tt Demiurge} contract of DENS-SMV is called {\tt SmvRoot} contract
+\item Voting can be restricted to a white list specified either directly or through a {\tt Group} contract
+\item A {\tt Padawan} contract can manage multiple token wallets, so that the user may have different voting rights for different proposals
+\end{itemize}

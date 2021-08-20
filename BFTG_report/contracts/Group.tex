@@ -7,26 +7,6 @@
 
 In file {\tt Group.sol}
 
-\section{Contract Inheritance}
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-IGroup & \\\hline
-\end{tabular}
-
-
-\section{Static Variable Definitions}
-
-\begin{lstlisting}[firstnumber=11]
-    string static _name;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-\begin{lstlisting}[firstnumber=12]
-    address[] _members;
-\end{lstlisting}
-
 \section{Constructor Definitions}
 
 \subsection{Constructor}
@@ -67,20 +47,6 @@ IGroup & \\\hline
     function addMember(uint128 idProposal, address member) public onlyContract {
         idProposal;
         _members.push(member);
-    }
-\end{lstlisting}
-
-\subsection{Function getMembers}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=19]
-    function getMembers() override public onlyContract {
-        IGroupCallback(msg.sender).onGetMembers
-            {value: 0, flag: 64, bounce: true}
-            (_name, _members);
     }
 \end{lstlisting}
 

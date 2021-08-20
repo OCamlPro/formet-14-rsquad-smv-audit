@@ -5,98 +5,7 @@
 
 In file {\tt Base.sol}
 
-\section{Constant Definitions}
-
-
-\begin{lstlisting}[firstnumber=8]
-    uint16 constant ERROR_DIFFERENT_CALLER =  211;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=10]
-    uint64 constant START_BALANCE       = 3 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=11]
-    uint64 constant DEPLOYER_FEE        = 0.1 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=12]
-    uint64 constant PROCESS_FEE         = 0.3 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=13]
-    uint64 constant VOTE_FEE            = 1 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=14]
-    uint64 constant DEPLOY_FEE          = START_BALANCE + DEPLOYER_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=15]
-    uint64 constant DEPLOY_PAY          = DEPLOY_FEE + PROCESS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=16]
-    uint64 constant DEPLOY_PROPOSAL_FEE = 5 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=17]
-    uint64 constant DEPLOY_PROPOSAL_PAY = DEPLOY_PROPOSAL_FEE + PROCESS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=18]
-    uint64 constant DEPOSIT_TONS_FEE    = 1 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=19]
-    uint64 constant DEPOSIT_TONS_PAY    = DEPOSIT_TONS_FEE + PROCESS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=20]
-    uint64 constant DEPOSIT_TOKENS_FEE  = 0.5 ton + DEPOSIT_TONS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=21]
-    uint64 constant DEPOSIT_TOKENS_PAY  = DEPOSIT_TOKENS_FEE + PROCESS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=22]
-    uint64 constant TOKEN_ACCOUNT_FEE   = 2 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=23]
-    uint64 constant TOKEN_ACCOUNT_PAY   = TOKEN_ACCOUNT_FEE + PROCESS_FEE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=24]
-    uint64 constant QUERY_STATUS_FEE    = 0.02 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=25]
-    uint64 constant QUERY_STATUS_PAY    = QUERY_STATUS_FEE + DEF_RESPONSE_VALUE;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=27]
-    uint64 constant DEF_RESPONSE_VALUE = 0.03 ton;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=28]
-    uint64 constant DEF_COMPUTE_VALUE = 0.2 ton;
-\end{lstlisting}
-
 \section{Modifier Definitions}
-
-
-\subsection{Modifier signed}
-
-
-\begin{lstlisting}[firstnumber=30]
-    modifier signed {
-        require(msg.pubkey() == tvm.pubkey(), Errors.INVALID_CALLER);
-        tvm.accept();
-        _;
-    }
-\end{lstlisting}
 
 \subsection{Modifier accept}
 
@@ -109,26 +18,6 @@ In file {\tt Base.sol}
 \begin{lstlisting}[firstnumber=36]
     modifier accept {
         tvm.accept();
-        _;
-    }
-\end{lstlisting}
-
-\subsection{Modifier onlyContract}
-
-
-\begin{lstlisting}[firstnumber=41]
-    modifier onlyContract() {
-        require(msg.sender != address(0), Errors.ONLY_CONTRACT);
-        _;
-    }
-\end{lstlisting}
-
-\subsection{Modifier onlyMe}
-
-
-\begin{lstlisting}[firstnumber=46]
-    modifier onlyMe {
-        require(msg.sender == address(this), ERROR_DIFFERENT_CALLER);
         _;
     }
 \end{lstlisting}

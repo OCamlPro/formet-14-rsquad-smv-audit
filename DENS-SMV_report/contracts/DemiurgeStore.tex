@@ -58,32 +58,6 @@ setters are specific (there is a different one for every kind).
     }
 \end{lstlisting}
 
-\subsection{Function setDensRootAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=21]
-    function setDensRootAddr(address addr) public signed {
-        require(addr != address(0));
-        _addrs[uint8(ContractAddr.DensRoot)] = addr;
-    }
-\end{lstlisting}
-
-\subsection{Function setFaucetAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=29]
-    function setFaucetAddr(address addr) public signed {
-        require(addr != address(0));
-        _addrs[uint8(ContractAddr.Faucet)] = addr;
-    }
-\end{lstlisting}
-
 \subsection{Function setPadawanCode}
 
 \begin{itemize}
@@ -109,18 +83,5 @@ setters are specific (there is a different one for every kind).
 \begin{lstlisting}[firstnumber=17]
     function setProposalCode(TvmCell code) public signed {
         _codes[uint8(ContractType.Proposal)] = code;
-    }
-\end{lstlisting}
-
-\subsection{Function setTokenRootAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=25]
-    function setTokenRootAddr(address addr) public signed {
-        require(addr != address(0));
-        _addrs[uint8(ContractAddr.TokenRoot)] = addr;
     }
 \end{lstlisting}

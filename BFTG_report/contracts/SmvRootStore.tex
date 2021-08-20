@@ -25,25 +25,6 @@ There is also an inconsistency between the getters and setters:
 getters are generic (they take a {\tt kind} as argument), whereas
 setters are specific (there is a different one for every kind).
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-ISmvRootStore & \\\hline
-\end{tabular}
-
-
-\section{Variable Definitions}
-
-\begin{lstlisting}[firstnumber=10]
-    mapping(uint8 => address) public _addrs;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=11]
-    mapping(uint8 => TvmCell) public _codes;
-\end{lstlisting}
-
 \section{Public Method Definitions}
 
 
@@ -72,19 +53,6 @@ ISmvRootStore & \\\hline
     function queryCode(ContractCode kind) external override {
         TvmCell code = _codes[uint8(kind)];
         ISmvRootStoreCallback(msg.sender).updateCode{value: 0, flag: 64, bounce: false}(kind, code);
-    }
-\end{lstlisting}
-
-\subsection{Function setBftgRootAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=26]
-    function setBftgRootAddr(address addr) public override signed {
-        require(addr != address(0));
-        _addrs[uint8(ContractAddr.BftgRoot)] = addr;
     }
 \end{lstlisting}
 

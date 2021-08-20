@@ -10,15 +10,7 @@ In file {\tt Checks.sol}
 This contract is now used directly, but only inherited by other
 contracts, such as {\tt BftgRoot}. However, the checks are not used.
 
-\section{Variable Definitions}
-
-
-\begin{lstlisting}[firstnumber=4]
-    uint8 _checkList;
-\end{lstlisting}
-
 \section{Modifier Definitions}
-
 
 \subsection{Modifier checksEmpty}
 
@@ -36,32 +28,5 @@ contracts, such as {\tt BftgRoot}. However, the checks are not used.
         require(_isCheckListEmpty(), 100); //Errors.NOT_ALL_CHECKS_PASSED);
         tvm.accept();
         _;
-    }
-\end{lstlisting}
-
-\section{Internal Method Definitions}
-
-
-\subsection{Function \_{}isCheckListEmpty}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=9]
-    function _isCheckListEmpty() internal view inline returns (bool) {
-        return (_checkList == 0);
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}passCheck}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=6]
-    function _passCheck(uint8 check) internal inline {
-        _checkList &= ~check;
     }
 \end{lstlisting}

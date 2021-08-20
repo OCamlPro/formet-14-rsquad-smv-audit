@@ -8,29 +8,6 @@
 
 In file {\tt JuryGroupResolver.sol}
 
-\section{Variable Definitions}
-
-\begin{lstlisting}[firstnumber=6]
-    TvmCell _codeJuryGroup;
-\end{lstlisting}
-
-\section{Public Method Definitions}
-
-
-\subsection{Function resolveJuryGroup}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=8]
-    function resolveJuryGroup(string tag, address deployer) public view returns (address addrJuryGroup) {
-        TvmCell state = _buildJuryGroupState(tag, deployer);
-        uint256 hashState = tvm.hash(state);
-        addrJuryGroup = address.makeAddrStd(0, hashState);
-    }
-\end{lstlisting}
-
 \section{Internal Method Definitions}
 
 

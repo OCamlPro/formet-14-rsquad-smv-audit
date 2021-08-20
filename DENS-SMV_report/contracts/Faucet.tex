@@ -1,0 +1,83 @@
+
+\chapter{Contract Faucet}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt Faucet.sol}
+
+This contract is used to create the initial voting rights of all
+users. Voting rights are stored in TIP-3 token wallets created by a
+root token contract.
+
+\subsection{Constructor}
+
+\begin{itemize}
+\item \issueMajor{No permission checks in {\tt
+    Faucet.constructor}}{The constructor is called with no check on
+  the caller. As a consequence, an attacker could deploy the contract
+  for another user (i.e. on the address for the pubkey of the other
+  user), initializing the contract with his own token wallet
+  address. This attack is still limited, but it might take some time
+  for the user to really understand what is happening, and the user
+  will have to restart the deployment on another pubkey. Fix: check
+  that the pubkey signed the constructor message}
+\item Minor issue: it would be safer to use the {\tt DemiurgeStore} to
+  recover the address of the token root contract.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=22]
+    constructor(address addrTokenRoot, address addrTokenWallet) public {
+        tvm.accept();
+        _addrTokenRoot = addrTokenRoot;
+        _addrTokenWallet = addrTokenWallet;
+    }
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+\subsection{Function claimTokens}
+
+\begin{itemize}
+\item Minor issue: the contract should implement ``on-bounced''
+  callbacks on its token wallet to recover from sending tokens to
+  not-yet-deployed token wallets.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=28]
+    function claimTokens(address addrTokenWallet) external override {
+        require(_balances[msg.pubkey()] != 0, Errors.INVALID_CALLER);
+        tvm.accept();
+
+        _totalDistributed = _balances[msg.pubkey()];
+        ITokenWallet(_addrTokenWallet).transfer(addrTokenWallet, _balances[msg.pubkey()], 0.1 ton);
+
+        delete _balances[msg.pubkey()];
+    }
+\end{lstlisting}
+
+\subsection{Function deployWallet}
+
+\begin{itemize}
+\item \issueCritical{No limitation on {\tt Faucet.deployWallet}}{A
+  malicious user owning a balance in the contract can drain the
+  contract balance by sending many {\tt deployWallet} messages to the
+  contract. Every message spends 0.5 ton of the balance. The owner of
+  the contract has no way to block the attack, as the attack remains
+  possible as long as the user does not use his balance with {\tt
+    claimTokens}. Fix: the contract could remember that a deployment
+  request was already done by this user.}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=49]
+    function deployWallet() external override {
+        require(_balances[msg.pubkey()] != 0, Errors.INVALID_CALLER);
+        tvm.accept();
+
+        ITokenRoot(_addrTokenRoot).deployEmptyWallet
+            {value: 0.5 ton, flag: 1, bounce: true}
+            (0, 0, msg.pubkey(), 0, 0.25 ton);
+    }
+\end{lstlisting}

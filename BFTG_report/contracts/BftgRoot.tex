@@ -5,64 +5,7 @@
 
 \section{Overview}
 
-
 In file {\tt BftgRoot.sol}
-
-\section{Contract Inheritance}
-
-\begin{itemize}
-\item Minor issue: {\tt Checks} is not currently used. Remove it if
-  there is no plan to use it.
-\end{itemize}
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-IBftgRoot & \\\hline
-IBftgRootStoreCallback & \\\hline
-ContestResolver & \\\hline
-JuryGroupResolver & \\\hline
-Checks & \\\hline
-\end{tabular}
-
-
-\section{Constant Definitions}
-
-
-\begin{lstlisting}[firstnumber=18]
-    uint8 constant CHECK_CONTEST_CODE = 1;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=19]
-    uint8 constant CHECK_JURY_GROUP_CODE = 2;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-
-\begin{lstlisting}[firstnumber=34]
-    address _addrBftgRootStore;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=54]
-    bool public _inited = false;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=110]
-    mapping(address => JuryGroupPending) _juryGroupPendings;
-\end{lstlisting}
-
-\section{Modifier Definitions}
-
-
-\subsection{Modifier onlyStore}
-
-
-\begin{lstlisting}[firstnumber=29]
-    modifier onlyStore() {
-        require(msg.sender == _addrBftgRootStore, Errors.ONLY_STORE);
-        _;
-    }
-\end{lstlisting}
 
 \section{Constructor Definitions}
 
@@ -190,22 +133,6 @@ Checks & \\\hline
     }
 \end{lstlisting}
 
-\subsection{Function getStored}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=142]
-    function getStored() public view returns (
-        TvmCell codeContest,
-        TvmCell codeJuryGroup
-    ) {
-        codeContest = _codeContest;
-        codeJuryGroup = _codeJuryGroup;
-    }
-\end{lstlisting}
-
 \subsection{Function registerMemberJuryGroup}
 
 \begin{itemize}
@@ -233,67 +160,5 @@ Checks & \\\hline
         IJuryGroup(addrJuryGroup).getMembers
             {value: 0, bounce: true, flag: 64}
             ();
-    }
-\end{lstlisting}
-
-\subsection{Function updateAddr}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=77]
-    function updateAddr(ContractAddr kind, address addr) external override {}
-\end{lstlisting}
-
-\subsection{Function updateCode}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=62]
-    function updateCode(
-        ContractCode kind,
-        TvmCell code
-    ) external override onlyStore {
-        if (kind == ContractCode.Contest) {
-            _codeContest = code;
-            _passCheck(CHECK_CONTEST_CODE);
-        }
-        if (kind == ContractCode.JuryGroup) {
-            _codeJuryGroup = code;
-            _passCheck(CHECK_JURY_GROUP_CODE);
-        }
-        _onInit();
-    }
-\end{lstlisting}
-
-\section{Internal Method Definitions}
-
-
-\subsection{Function \_{}createChecks}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=21]
-    function _createChecks() private inline {
-        _checkList = CHECK_CONTEST_CODE | CHECK_JURY_GROUP_CODE;
-    }
-\end{lstlisting}
-
-\subsection{Function \_{}onInit}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=56]
-    function _onInit() private {
-        if(_isCheckListEmpty() && !_inited) {
-            _inited = true;
-        }
     }
 \end{lstlisting}

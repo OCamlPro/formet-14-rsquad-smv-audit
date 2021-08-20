@@ -25,40 +25,6 @@ There is also an inconsistency between the getters and setters:
 getters are generic (they take a {\tt kind} as argument), whereas
 setters are specific (there is a different one for every kind).
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-IBftgRootStore & \\\hline
-\end{tabular}
-
-
-\section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-mapping (uint8 =$>$ address) & \_{}addrs &  \\\hline
- & & used in @1.BftgRootStore.queryAddr\\\hline
-mapping (uint8 =$>$ TvmCell) & \_{}codes &  \\\hline
- & & assigned in @1.BftgRootStore.setJuryGroupCode\\\hline
- & & used in @1.BftgRootStore.setJuryGroupCode\\\hline
- & & assigned in @1.BftgRootStore.setContestCode\\\hline
- & & used in @1.BftgRootStore.setContestCode\\\hline
- & & used in @1.BftgRootStore.queryCode\\\hline
-\end{tabular}
-\fi
-
-
-\begin{lstlisting}[firstnumber=10]
-    mapping(uint8 => address) public _addrs;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=11]
-    mapping(uint8 => TvmCell) public _codes;
-\end{lstlisting}
-
 \section{Public Method Definitions}
 
 

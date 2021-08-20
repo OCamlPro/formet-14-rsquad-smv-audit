@@ -8,34 +8,6 @@
 
 In file {\tt JuryGroup.sol}
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-IJuryGroup & \\\hline
-\end{tabular}
-
-
-\section{Static Variable Definitions}
-
-\begin{lstlisting}[firstnumber=11]
-    string static public _tag;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=12]
-    address static _deployer;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-\begin{lstlisting}[firstnumber=14]
-    mapping(address => Member) public _members;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=15]
-    uint32 _membersCounter;
-\end{lstlisting}
-
 \section{Modifier Definitions}
 
 
@@ -74,19 +46,6 @@ IJuryGroup & \\\hline
 
 \section{Public Method Definitions}
 
-
-\subsection{Function getMembers}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=45]
-    function getMembers() public override {
-        IJuryGroupCallback(msg.sender).getMembersCallback{value: 0, flag: 64, bounce: false}(_members);
-    }
-\end{lstlisting}
-
 \subsection{Function registerMember}
 
 \begin{itemize}
@@ -123,21 +82,5 @@ IJuryGroup & \\\hline
         require(_members[msg.sender].balance < amount, 202);
         msg.sender.transfer(amount, true, 1);
         _members[msg.sender].balance -= amount;
-    }
-\end{lstlisting}
-
-\section{Internal Method Definitions}
-
-
-\subsection{Function \_{}addMember}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=32]
-    function _addMember(address addrMember, uint128 value) private inline {
-        _members[addrMember] = Member(_membersCounter, value, addrMember);
-        _membersCounter++;
     }
 \end{lstlisting}

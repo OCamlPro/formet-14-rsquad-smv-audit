@@ -8,86 +8,6 @@
 
 In file {\tt Padawan.sol}
 
-\section{Contract Inheritance}
-
-
-\noindent\begin{tabular}{|l|p{5cm}|}\hline
-Base & \\\hline
-IEstimateVotesCallback & \\\hline
-\end{tabular}
-
-
-\section{Static Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=32]
-    address static _deployer;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=33]
-    address static _owner;
-\end{lstlisting}
-
-\section{Variable Definitions}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=35]
-    mapping(address => Balance) public _balances;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=36]
-    mapping(address => address) public _tokenAccounts;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=37]
-    mapping(address => ActiveProposal) public _activeProposals;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=38]
-    uint32 _activeProposalsLength;
-\end{lstlisting}
-
-\begin{lstlisting}[firstnumber=40]
-    Reclaim public _reclaim;
-\end{lstlisting}
-
-\section{Modifier Definitions}
-
-
-\subsection{Modifier onlyOwner}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=44]
-    modifier onlyOwner() {
-        require(msg.sender == _owner, Errors.NOT_AUTHORIZED_CONTRACT);
-        _;
-    }
-\end{lstlisting}
-
-\section{Constructor Definitions}
-
-
-\subsection{Constructor}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=49]
-    constructor() public onlyContract {
-        require(_deployer == msg.sender, Errors.ONLY_DEPLOYER);
-    }
-\end{lstlisting}
-
 \section{Public Method Definitions}
 
 \subsection{Function confirmVote}
@@ -113,57 +33,6 @@ IEstimateVotesCallback & \\\hline
             _balances[balanceProvider].locked = (activeProposalVotes) * votePrice;
         }
         _owner.transfer(0, false, 64);
-    }
-\end{lstlisting}
-
-\subsection{Function createTokenAccount}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=228]
-    function createTokenAccount(address tokenRoot) external onlyOwner {
-        require(msg.value >= DEFAULT_FEE, Errors.MSG_VALUE_TOO_LOW);
-        require(!_tokenAccounts.exists(tokenRoot));
-
-        ITokenRoot(tokenRoot).deployEmptyWallet
-            {value: 0, flag: 64, bounce: true}
-            (tvm.functionId(onTokenWalletDeploy), 0, 0, address(this).value, 1 ton);
-    }
-\end{lstlisting}
-
-\subsection{Function depositTokens}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=210]
-    function depositTokens(address tokenRoot) external onlyOwner {
-        require(msg.value >= DEFAULT_FEE, Errors.MSG_VALUE_TOO_LOW);
-        optional(address) optTokenAccount = _tokenAccounts.fetch(tokenRoot);
-        require(optTokenAccount.hasValue(), Errors.ACCOUNT_DOES_NOT_EXIST);
-
-        address tokenAccount = optTokenAccount.get();
-
-        ITokenWallet(tokenAccount).getBalance_InternalOwner
-            {value: 0, flag: 64, bounce: true}
-            (tvm.functionId(onTokenWalletGetBalance));
-    }
-\end{lstlisting}
-
-\subsection{Function depositTons}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=204]
-    function depositTons(uint128 tons) external onlyOwner {
-        require(msg.value >= tons + 1 ton);
-        _balances[address(0)].total += tons;
-        // _owner.transfer(0, false, 64);
     }
 \end{lstlisting}
 
@@ -381,44 +250,5 @@ IEstimateVotesCallback & \\\hline
                 }
             }
         }
-    }
-\end{lstlisting}
-
-\subsection{Function vote}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=53]
-    function vote(address proposal, bool choice, uint128 votes) external onlyOwner {
-        require(msg.value >= VOTE_FEE, Errors.MSG_VALUE_TOO_LOW);
-        IProposal(proposal).estimateVotes
-            {value: 0, flag: 64, bounce: true}
-            (votes, choice);
-    }
-\end{lstlisting}
-
-\section{Internal Method Definitions}
-
-
-\subsection{Function \_{}doReclaim}
-
-\begin{itemize}
-\item OK
-\end{itemize}
-
-\begin{lstlisting}[firstnumber=191]
-    function _doReclaim() private inline {
-        if(_reclaim.balanceProvider == address(0)) {
-            _reclaim.returnTo.transfer(_reclaim.amount, true, 1);
-        } else {
-            ITokenWallet(_reclaim.balanceProvider).transfer
-                {value: 0.2 ton} // refactor
-                (_reclaim.returnTo, _reclaim.amount, 0.1 ton);
-        }
-        _balances[_reclaim.balanceProvider].total -= _reclaim.amount;
-        delete _reclaim;
-        _owner.transfer(0, false, 64);
     }
 \end{lstlisting}
