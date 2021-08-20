@@ -10,20 +10,6 @@ In file {\tt JuryGroupResolver.sol}
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-TvmCell & \_{}codeJuryGroup &  \\\hline
- & & assigned in @1.BftgRoot.updateCode\\\hline
- & & used in @1.BftgRoot.updateCode\\\hline
- & & used in @1.BftgRoot.getStored\\\hline
- & & assigned in @18.Contest.updateCode\\\hline
- & & used in @18.Contest.updateCode\\\hline
- & & used in @9.JuryGroupResolver.\_{}buildJuryGroupState\\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=6]
     TvmCell _codeJuryGroup;
 \end{lstlisting}
@@ -34,7 +20,7 @@ TvmCell & \_{}codeJuryGroup &  \\\hline
 \subsection{Function resolveJuryGroup}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=8]
@@ -51,7 +37,10 @@ TvmCell & \_{}codeJuryGroup &  \\\hline
 \subsection{Function \_{}buildJuryGroupState}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should fail ({\tt require}) if the
+  {\tt \_codeJuryGroup} variable has not yet been initialized. A global
+  boolean could be used for that, set in an internal function
+  initializing both global variables.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=14]

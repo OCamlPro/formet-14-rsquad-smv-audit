@@ -152,17 +152,13 @@ Checks & \\\hline
 \subsection{Function calcRewards}
 
 \begin{itemize}
-\item \issueCritical{Not reentrant in {\tt Contest.calcRewards}}{This
-  function is not reentrant, meaning that an attacker could call it
-  several times to modify the rewards given to the participants.
-  The function should:
-  \begin{itemize}
-  \item Check that the voting stage is over, and that the reward stage
-    is not yet started
-  \item Initialize the {\tt \_rewards} table to 0 before starting
-    adding rewards to it (in case a computation was already done)
-  \end{itemize}
-}
+\item \issueCritical{No stage check in {\tt Contest.calcRewards}}{
+  Because this function performs no check on the sender, and no check
+  on the current stage (except the one of monotonicity in {\tt
+    \_changeStage}), an attacker could use it to terminate a contest
+  from any stage before the {\tt Reward} stage to that stage without
+  passing through previous stages. Fix: this function should check for
+  a delay after the start of the voting stage.  }
 \item \issueMajor{Wrong computation in {\tt Contest.calcRewards}} {The
   interpretation of ``point value'' differs in {\tt calcRewards} and
   {\tt \_calcPointValue}. Indeed, in {\tt \_calcPointValue}, the
@@ -238,7 +234,8 @@ Checks & \\\hline
 \begin{itemize}
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
+\item Minor issue: the test {\tt member.balance $>=$ 0} is useless as
+  the field is an unsigned integer {\tt uint128}.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=87]
@@ -259,7 +256,7 @@ Checks & \\\hline
 \subsection{Function hashVote}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=223]
@@ -274,9 +271,15 @@ Checks & \\\hline
 \subsection{Function reveal}
 
 \begin{itemize}
+\item \issueCritical{Multiple revelations in {\tt Contest.reveal}}{A
+  jury can reveal his votes several times, adding them several times
+  in the {\tt \_submissionVotes} table. Fix: remove submission from
+  {\tt \_juryHiddenVotes} everytime  they are revealed.}
+\item Minor issue (gas cost): instead of failing if {\tt oldHash} and
+  {\tt newHash} differ, the function should probably returns the list
+  of failed couples, and keep working for correct couples.
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=155]
@@ -298,7 +301,6 @@ Checks & \\\hline
 \begin{itemize}
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=204]
@@ -321,9 +323,9 @@ Checks & \\\hline
 \subsection{Function submit}
 
 \begin{itemize}
+\item \issueMajor{Unbounded storage in {\tt Contest.submit}}{Anybody can call this function. An attacker could use it to increase dramatically the cost of calling the contract by storing a very big submission into the contest storage.}
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=121]
@@ -338,7 +340,7 @@ Checks & \\\hline
 \subsection{Function updateAddr}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=81]
@@ -348,7 +350,26 @@ Checks & \\\hline
 \subsection{Function updateCode}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check in {\tt Contest.updateCode}}{
+  No check is performed on the sender of this message, allowing an
+  attacker to provide his own malicious implementation of {\tt
+    JuryGroup} to the contract. Fix: check the sender, or check the
+  code hash of the code. }
+\item \issueMajor{No gas check in {\tt Contest.updateCode}}{Given that
+  this function is responsible for sending {\tt getMembers} messages
+  to all jury groups, it should check by {\tt require} that the
+  message contains enough gas to perform these sends. Otherwise, it
+  could happen that the action phase could succeed, the contract would
+  remember that it was initialized, yet the transaction would be
+  aborted in the sending phase and no message would actually be sent
+  by lack of gas.}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\item Minor issue: if {\tt kind} is not {\tt ContractCode.JuryGroup},
+  this function will silently return without error, whereas the user
+  might interpret it as successful and initialization done. Fix:
+  replace the {\tt if} by a {\tt require}.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=73]
@@ -366,7 +387,8 @@ Checks & \\\hline
 \begin{itemize}
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
+\item Minor issue: maybe this function could be relaxed to allow the
+  voter to change his vote
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=134]
@@ -388,9 +410,7 @@ Checks & \\\hline
 \subsection{Function \_{}calcPointValue}
 
 \begin{itemize}
-\item Minor issue (readability): an integer is used as an error. Fix:
-  a constant should be defined instead.
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=188]
@@ -405,7 +425,6 @@ Checks & \\\hline
 \begin{itemize}
 \item Minor issue (readability): an integer is used as an error. Fix:
   a constant should be defined instead.
-\item TODO
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=106]
@@ -421,7 +440,7 @@ Checks & \\\hline
 \subsection{Function \_{}createChecks}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=17]
@@ -433,7 +452,7 @@ Checks & \\\hline
 \subsection{Function \_{}onInit}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=47]

@@ -29,7 +29,7 @@ TvmCell & \_{}codeGroup &  \\\hline
 \subsection{Function resolveGroup}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=10]
@@ -46,7 +46,10 @@ TvmCell & \_{}codeGroup &  \\\hline
 \subsection{Function \_{}buildGroupState}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should fail ({\tt require}) if the
+  {\tt \_codeGroup} variable has not yet been initialized. A global
+  boolean could be used for that, set in an internal function
+  initializing both global variables.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=16]

@@ -5,11 +5,9 @@
 
 \section{Overview}
 
-
 In file {\tt Group.sol}
 
 \section{Contract Inheritance}
-
 
 \noindent\begin{tabular}{|l|p{5cm}|}\hline
 Base & \\\hline
@@ -19,37 +17,11 @@ IGroup & \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-string & \_{}name &  \\\hline
- & & used in @21.Group.getMembers\\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=11]
     string static _name;
 \end{lstlisting}
 
 \section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address [] & \_{}members &  \\\hline
- & & assigned in @21.Group.removeMember\\\hline
- & & used in @21.Group.removeMember\\\hline
- & & used in @21.Group.removeMember\\\hline
- & & used in @21.Group.removeMember\\\hline
- & & used in @21.Group.removeMember\\\hline
- & & used in @21.Group.getMembers\\\hline
- & & used in @21.Group.addMember\\\hline
- & & assigned in @21.Group.:constructor\\\hline
- & & used in @21.Group.:constructor\\\hline
-\end{tabular}
-\fi
-
 
 \begin{lstlisting}[firstnumber=12]
     address[] _members;
@@ -57,11 +29,18 @@ address [] & \_{}members &  \\\hline
 
 \section{Constructor Definitions}
 
-
 \subsection{Constructor}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check in {\tt Group.constructor}}
+  {No permission check is performed on the deployer of the contract.
+    As a consequence, an attacker could deploy a {\tt Group} contract
+    for a given name before the user, if it can predict that the user
+    will use that name, and the attacker could initialize the contract
+    with his own list of (malicious) members. Fix: add a static
+    variable in the contract, with the only allowed deployer of the
+    contract and check that the sender is the allowed deployer in the
+    constructor. }
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=15]
@@ -76,7 +55,12 @@ address [] & \_{}members &  \\\hline
 \subsection{Function addMember}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check in {\tt Group.addMember}}{An
+  attacker could add any member to the group because no permission
+  check is performed in this function}
+\item Minor issue: a member can be added several times in the
+  group. Fix: use a mapping and only add non-existing members.
+\item Minor issue: the argument {\tt idProposal} is not used.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=25]
@@ -89,7 +73,7 @@ address [] & \_{}members &  \\\hline
 \subsection{Function getMembers}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=19]
@@ -103,7 +87,10 @@ address [] & \_{}members &  \\\hline
 \subsection{Function removeMember}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check on {\tt removeMember}}{An
+  attacker could remove any member of the group, as no permission
+  check is performed.}
+\item Minor issue: the argument {\tt idProposal} is not used.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=30]

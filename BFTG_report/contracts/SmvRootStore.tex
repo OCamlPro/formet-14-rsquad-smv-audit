@@ -1,0 +1,145 @@
+
+\chapter{Contract SmvRootStore}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt SmvRootStore.sol}
+
+\section{General Minor-level Remarks}
+
+In general, the infrastructure would be safer if this contract would
+be implemented in two phases:
+\begin{itemize}
+\item In the Initialization phase, the contract is waiting for all the
+  {\tt setXXX} methods to be called to initialize all the fields. A
+  bitmap can be used to keep the current initialization state. Any
+  attempt to user a {\tt getXXX} method should fail.
+\item In the Post-Initalization phase, the contract accepts to reply
+  to {\tt getXXX} methods, but {\tt setXXX} methods are disabled.
+\end{itemize}
+
+There is also an inconsistency between the getters and setters:
+getters are generic (they take a {\tt kind} as argument), whereas
+setters are specific (there is a different one for every kind).
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+ISmvRootStore & \\\hline
+\end{tabular}
+
+
+\section{Variable Definitions}
+
+\begin{lstlisting}[firstnumber=10]
+    mapping(uint8 => address) public _addrs;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=11]
+    mapping(uint8 => TvmCell) public _codes;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function queryAddr}
+
+\begin{itemize}
+\item Minor issue: a {\tt require} could be added to fail if {\tt
+  kind} is not a well-known kind.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=36]
+    function queryAddr(ContractAddr kind) external override {
+        address addr = _addrs[uint8(kind)];
+        ISmvRootStoreCallback(msg.sender).updateAddr{value: 0, flag: 64, bounce: false}(kind, addr);
+    }
+\end{lstlisting}
+
+\subsection{Function queryCode}
+
+\begin{itemize}
+\item Minor issue: a {\tt require} could be added to fail if {\tt
+  kind} is not a well-known kind.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=31]
+    function queryCode(ContractCode kind) external override {
+        TvmCell code = _codes[uint8(kind)];
+        ISmvRootStoreCallback(msg.sender).updateCode{value: 0, flag: 64, bounce: false}(kind, code);
+    }
+\end{lstlisting}
+
+\subsection{Function setBftgRootAddr}
+
+\begin{itemize}
+\item OK
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=26]
+    function setBftgRootAddr(address addr) public override signed {
+        require(addr != address(0));
+        _addrs[uint8(ContractAddr.BftgRoot)] = addr;
+    }
+\end{lstlisting}
+
+\subsection{Function setGroupCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=19]
+    function setGroupCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.Group)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setPadawanCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=13]
+    function setPadawanCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.Padawan)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setProposalCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=16]
+    function setProposalCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.Proposal)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setProposalFactoryCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=22]
+    function setProposalFactoryCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.ProposalFactory)] = code;
+    }
+\end{lstlisting}

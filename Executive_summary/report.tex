@@ -1,0 +1,88 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{array}
+\usepackage[table]{xcolor}
+
+\begin{document}
+
+\title{Audit of the SMV projects\\Executive Summary}
+\author{By OCamlPro\\Contact: @fabrice\_dune}
+\maketitle
+
+\section{Introduction}
+
+This set of documents is a submission for the 14th contest of the
+Formal Methods sub-governance, called ``Contest Proposal: SMV Smart
+Contract Informal Audit Respin''.
+
+The projects to be audited were:
+\begin{itemize}
+\item DENS-SMV Project, at \url{https://github.com/RSquad/dens-smv} at branch master with
+  hash code equal to fbdfe4bca3c372b02cacf9788b4ad37112d0da2c
+\item BFTG Project (SMV part only) at
+  \url{https://github.com/RSquad/BFTG} (SMV part only) at branch
+  master with hash code equal to
+  7c6ec7d811bcc1f228a3499ab19f6d20652ca94b
+\end{itemize}
+
+The contest ended at Aug 20, 2021, 23:59:59 UTC.
+
+This submission includes 3 documents:
+\begin{itemize}
+\item This executive summary
+\item A detailed audit report for DENS-SMV project
+\item A detailed audit report for BFTG project
+\end{itemize}
+
+Both detailed reports start with an index of major and critical
+issues, with hyper-links to detailed explanations.
+
+\section{Methodology}
+
+The methodology used for this audit is the following:
+\begin{enumerate}
+\item Process all solidity files through an analyzer to generate a
+  document with the code source ready for annotations
+\item Read all the code source in the document, reporting any issue
+  found in the code. For some issues, test whether the issue can
+  happen on the testnet.
+\item Following requests from jurors from previous audits, remove all
+  functions without any interesting comments.
+\end{enumerate}
+
+Issues are sorted into 3 kinds:
+\begin{itemize}
+\item Critical issues: these issues could be used by a malicious user
+  to steal tokens, or change the behavior of the service, making its
+  results useless
+\item Major issues: these issues can degrade the quality of the
+  service
+\item Minor issues: these issues have no real impact on the service,
+  but could improve its development (for example, remarks on coding
+  style, etc.)
+\end{itemize}
+
+We submitted some of the major and critical issues to the development
+team (Roman @inyellowbus), but got no returns. 
+
+We audited all the contracts of the 2 projects, though only the SMV
+part of the BFTG project was required to be audited.
+
+\section{Results}
+
+\subsection{DENS-SMV Project}
+
+We reported 5 critical issues, and 3 major issues in this project
+(see the Table of Major and Critical Issues in the second page of the
+corresponding report, with hyperlinks to the issues)
+
+\subsection{BFTG Project}
+
+We reported 15 critical issues, and 8 major issues in this project
+(see the Table of Major and Critical Issues in the second page of the
+corresponding report, with hyperlinks to the issues)
+
+\end{document}

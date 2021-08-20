@@ -164,9 +164,11 @@ proposal. Votes are sent by {\tt Padawan} contracts.
   \_proposalInfo.start} to {\tt now}, it is impossible for this
   function to return the {\tt VOTING\_NOT\_STARTED} error.
 \item Minor issue: the transaction could be aborted if a {\tt
-  onProposalPassed} message is sent by {\tt finalize}, together with
-  {\tt rejectVote} or {\tt confirmVote} messages, because of the flag 64.
-  Need to test that it is ok.
+  onProposalPassed} message is sent by {\tt \_finalize} (in {\tt
+  \_wrapUp}), together with {\tt rejectVote} or {\tt confirmVote}
+  messages, because of the flag 64.  Need to test what happens if two
+  messages are sent by the same transaction, with one of them
+  containing the flag 64.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=55]
@@ -347,7 +349,8 @@ proposal. Votes are sent by {\tt Padawan} contracts.
 
 \begin{itemize}
 \item Minor issue: the function could immediately check if the state
-  is above {\tt Ended} to avoid recomputing again;
+  is above {\tt Ended} to avoid recomputing again when the state
+  cannot change anymore;
 \item Minor issue: there is no need to call {\tt \_changeState} before
   calling {\tt \_finalize}, as {\tt \_finalize} always calls {\tt
     \_changeState} and will thus override the state written in this

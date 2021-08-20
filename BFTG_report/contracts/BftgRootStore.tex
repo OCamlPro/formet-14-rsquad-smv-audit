@@ -1,0 +1,119 @@
+
+\chapter{Contract BftgRootStore}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt BftgRootStore.sol}
+
+\section{General Minor-level Remarks}
+
+In general, the infrastructure would be safer if this contract would
+be implemented in two phases:
+\begin{itemize}
+\item In the Initialization phase, the contract is waiting for all the
+  {\tt setXXX} methods to be called to initialize all the fields. A
+  bitmap can be used to keep the current initialization state. Any
+  attempt to user a {\tt getXXX} method should fail.
+\item In the Post-Initalization phase, the contract accepts to reply
+  to {\tt getXXX} methods, but {\tt setXXX} methods are disabled.
+\end{itemize}
+
+There is also an inconsistency between the getters and setters:
+getters are generic (they take a {\tt kind} as argument), whereas
+setters are specific (there is a different one for every kind).
+
+\section{Contract Inheritance}
+
+
+\noindent\begin{tabular}{|l|p{5cm}|}\hline
+Base & \\\hline
+IBftgRootStore & \\\hline
+\end{tabular}
+
+
+\section{Variable Definitions}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+mapping (uint8 =$>$ address) & \_{}addrs &  \\\hline
+ & & used in @1.BftgRootStore.queryAddr\\\hline
+mapping (uint8 =$>$ TvmCell) & \_{}codes &  \\\hline
+ & & assigned in @1.BftgRootStore.setJuryGroupCode\\\hline
+ & & used in @1.BftgRootStore.setJuryGroupCode\\\hline
+ & & assigned in @1.BftgRootStore.setContestCode\\\hline
+ & & used in @1.BftgRootStore.setContestCode\\\hline
+ & & used in @1.BftgRootStore.queryCode\\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=10]
+    mapping(uint8 => address) public _addrs;
+\end{lstlisting}
+
+\begin{lstlisting}[firstnumber=11]
+    mapping(uint8 => TvmCell) public _codes;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function queryAddr}
+
+\begin{itemize}
+\item Minor issue: a {\tt require} could be added to fail if {\tt
+  kind} is not a well-known kind.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=26]
+    function queryAddr(ContractAddr kind) external override {
+        address addr = _addrs[uint8(kind)];
+        IBftgRootStoreCallback(msg.sender).updateAddr{value: 0, flag: 64, bounce: false}(kind, addr);
+    }
+\end{lstlisting}
+
+\subsection{Function queryCode}
+
+\begin{itemize}
+\item Minor issue: a {\tt require} could be added to fail if {\tt
+  kind} is not a well-known kind.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=21]
+    function queryCode(ContractCode kind) external override {
+        TvmCell code = _codes[uint8(kind)];
+        IBftgRootStoreCallback(msg.sender).updateCode{value: 0, flag: 64, bounce: false}(kind, code);
+    }
+\end{lstlisting}
+
+\subsection{Function setContestCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=17]
+    function setContestCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.Contest)] = code;
+    }
+\end{lstlisting}
+
+\subsection{Function setJuryGroupCode}
+
+\begin{itemize}
+\item Minor issue: the infrastructure would probably be safer if the
+  expected code hash is hardcoded in the source code, and check
+  through a {\tt require}
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=13]
+    function setJuryGroupCode(TvmCell code) public override signed {
+        _codes[uint8(ContractCode.JuryGroup)] = code;
+    }
+\end{lstlisting}

@@ -1,0 +1,74 @@
+
+\section{Module "IProposalFactory.sol"}
+
+
+\subsection{Pragmas}
+
+
+\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
+ton & -solidity $>$= 0.45.0 &\\\hline
+\end{tabular}
+
+
+\subsection{Type Definitions}
+
+
+\subsubsection{Struct ContestProposalSpecific}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+duration & uint32 & \\\hline
+description & string & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=3]
+struct ContestProposalSpecific {
+    uint32 duration;
+    string description;
+}
+\end{lstlisting}
+
+\subsubsection{Struct AddMemberProposalSpecific}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+nonce & string & \\\hline
+member & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=7]
+struct AddMemberProposalSpecific {
+    string nonce;
+    address member;
+}
+\end{lstlisting}
+
+\subsubsection{Struct RemoveMemberProposalSpecific}
+
+
+\ifsoltables
+\noindent\begin{tabular}{|l|l|p{6cm}|}\hline
+nonce & string & \\\hline
+member & address & \\\hline
+\end{tabular}
+\fi
+
+
+\begin{lstlisting}[firstnumber=11]
+struct RemoveMemberProposalSpecific {
+    string nonce;
+    address member;
+}
+\end{lstlisting}
+
+\subsection{Contract Definitions}
+
+\begin{itemize}
+\item IProposalFactory
+\end{itemize}

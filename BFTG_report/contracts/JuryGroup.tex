@@ -18,16 +18,6 @@ IJuryGroup & \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-string & \_{}tag &  \\\hline
-address & \_{}deployer &  \\\hline
- & & used in @19.JuryGroup.:constructor\\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=11]
     string static public _tag;
 \end{lstlisting}
@@ -37,28 +27,6 @@ address & \_{}deployer &  \\\hline
 \end{lstlisting}
 
 \section{Variable Definitions}
-
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-mapping (address =$>$ Member) & \_{}members &  \\\hline
- & & assigned in @19.JuryGroup.withdraw\\\hline
- & & used in @19.JuryGroup.withdraw\\\hline
- & & used in @19.JuryGroup.withdraw\\\hline
- & & used in @19.JuryGroup.withdraw\\\hline
- & & assigned in @19.JuryGroup.registerMember\\\hline
- & & used in @19.JuryGroup.registerMember\\\hline
- & & used in @19.JuryGroup.registerMember\\\hline
- & & used in @19.JuryGroup.getMembers\\\hline
- & & assigned in @19.JuryGroup.\_{}addMember\\\hline
- & & used in @19.JuryGroup.\_{}addMember\\\hline
-uint32 & \_{}membersCounter &  \\\hline
- & & assigned in @19.JuryGroup.\_{}addMember\\\hline
- & & used in @19.JuryGroup.\_{}addMember\\\hline
- & & used in @19.JuryGroup.\_{}addMember\\\hline
-\end{tabular}
-\fi
-
 
 \begin{lstlisting}[firstnumber=14]
     mapping(address => Member) public _members;
@@ -73,6 +41,10 @@ uint32 & \_{}membersCounter &  \\\hline
 
 \subsection{Modifier onlyDeployer}
 
+\begin{itemize}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=6]
     modifier onlyDeployer() {
@@ -87,7 +59,8 @@ uint32 & \_{}membersCounter &  \\\hline
 \subsection{Constructor}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=17]
@@ -105,7 +78,7 @@ uint32 & \_{}membersCounter &  \\\hline
 \subsection{Function getMembers}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=45]
@@ -117,7 +90,9 @@ uint32 & \_{}membersCounter &  \\\hline
 \subsection{Function registerMember}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): replace the comparison with {\tt
+  false} by inversing the {\tt then} and {\tt else} clauses in the
+  {\tt if}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=24]
@@ -133,7 +108,12 @@ uint32 & \_{}membersCounter &  \\\hline
 \subsection{Function withdraw}
 
 \begin{itemize}
-\item TODO
+\item \issueMajor{Wrong comparison in {\tt JuryGroup.withdraw}}{The
+  check {\tt \_members[msg.sender].balance < amount} will fail, or if
+  it does not fail, the operation {\tt \_members[msg.sender].balance
+    -= amount} will fail. Either way, the function will always fail.}
+\item Minor issue: the check {\tt \_members[msg.sender].balance $>=$ 0
+  ton} is always true, because {\tt balance} is an {\tt uint128}.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=37]
@@ -152,7 +132,7 @@ uint32 & \_{}membersCounter &  \\\hline
 \subsection{Function \_{}addMember}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=32]

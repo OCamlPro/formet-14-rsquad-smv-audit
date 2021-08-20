@@ -1,0 +1,54 @@
+
+\chapter{Contract ProposalFactoryResolver}
+
+\minitoc
+
+\section{Overview}
+
+
+In file {\tt ProposalFactoryResolver.sol}
+
+\section{Variable Definitions}
+
+\begin{lstlisting}[firstnumber=6]
+    TvmCell _codeProposalFactory;
+\end{lstlisting}
+
+\section{Public Method Definitions}
+
+
+\subsection{Function resolveProposalFactory}
+
+\begin{itemize}
+\item OK
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=8]
+    function resolveProposalFactory(address deployer) public view returns (address addrProposalFactory) {
+        TvmCell state = _buildProposalFactoryState(deployer);
+        uint256 hashState = tvm.hash(state);
+        addrProposalFactory = address.makeAddrStd(0, hashState);
+    }
+\end{lstlisting}
+
+\section{Internal Method Definitions}
+
+
+\subsection{Function \_{}buildProposalFactoryState}
+
+\begin{itemize}
+\item Minor issue: this function should fail ({\tt require}) if the
+  {\tt \_codeProposalFactory} variable has not yet been initialized. A global
+  boolean could be used for that, set in an internal function
+  initializing both global variables.
+\end{itemize}
+
+\begin{lstlisting}[firstnumber=14]
+    function _buildProposalFactoryState(address deployer) internal view returns (TvmCell) {
+        return tvm.buildStateInit({
+            contr: ProposalFactory,
+            varInit: {_deployer: deployer},
+            code: _codeProposalFactory
+        });
+    }
+\end{lstlisting}

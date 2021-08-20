@@ -10,29 +10,16 @@ In file {\tt PadawanResolver.sol}
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-TvmCell & \_{}codePadawan &  \\\hline
- & & used in @3.Proposal.\_{}buildPadawanState\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & used in @17.PadawanResolver.\_{}buildPadawanState\\\hline
-\end{tabular}
-\fi
-
-
 \begin{lstlisting}[firstnumber=8]
     TvmCell _codePadawan;
 \end{lstlisting}
 
 \section{Public Method Definitions}
 
-
 \subsection{Function resolvePadawan}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=10]
@@ -49,7 +36,10 @@ TvmCell & \_{}codePadawan &  \\\hline
 \subsection{Function \_{}buildPadawanState}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: this function should fail ({\tt require}) if the
+  {\tt \_codeJuryGroup} variable has not yet been initialized. A global
+  boolean could be used for that, set in an internal function
+  initializing both global variables.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=16]

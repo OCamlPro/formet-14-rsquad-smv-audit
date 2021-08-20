@@ -49,11 +49,11 @@
 \newcommand\issueMajor[2]{\addcomment{\bf Major issue: #1}{pink}{#2}}
 \newcommand\issueMinor[2]{\addcomment{\bf Minor issue: #1}{cyan}{#2}}
 
-\ifsoldraft
-\usepackage[firstpage]{draftwatermark}
-\SetWatermarkText{Confidential}
-\SetWatermarkScale{5}
-\fi
+%\ifsoldraft
+%\usepackage[firstpage]{draftwatermark}
+%\SetWatermarkText{Confidential}
+%\SetWatermarkScale{5}
+%\fi
 
 \pagestyle{fancy}
 \renewcommand{\footrulewidth}{0.4pt}
@@ -65,7 +65,7 @@
 
 \begin{document}
 
-\title{Audit}
+\title{Audit of the BFTG project}
 \author{By OCamlPro}
 \maketitle
 \dominitoc
@@ -74,33 +74,11 @@
 \fi
 \tableofcontents
 
-\ifsoldraft
-\chapter*{To edit this document}
-
-In the report.tex file, choose:
-\begin{itemize}
-\item{\bf \textbackslash{}soldraftfalse} to remove draft mode (watermarks, advises)
-\item{\bf \textbackslash{}solmodulestrue} to display modules by chapter instead of contracts
-\item{\bf \textbackslash{}soltablestrue} to display tables for parameters and returns
-\item{\bf \textbackslash{}solissuesfalse} to remove the table of issues
-\end{itemize}
-
-Issues can be entered with:
-\begin{itemize}
-\item{\bf \textbackslash{}issueCritical\{title\}\{text\}}
-\item{\bf \textbackslash{}issueMajor\{title\}\{text\}}
-\item{\bf \textbackslash{}issueMinor\{title\}\{text\}}
-\end{itemize}
-\fi
-
-\chapter{Introduction}
-\input{introduction.tex}
-
 \chapter{Overview}
 \input{overview.tex}
 
 %\ifsolmodules
-\input{modules.tex}
+%\input{modules.tex}
 %\else
 \input{contracts.tex}
 %\fi

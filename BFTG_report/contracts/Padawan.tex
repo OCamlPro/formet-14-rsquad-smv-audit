@@ -19,20 +19,9 @@ IEstimateVotesCallback & \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}deployer &  \\\hline
- & & used in @2.Padawan.:constructor\\\hline
-address & \_{}owner &  \\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=32]
     address static _deployer;
@@ -44,86 +33,9 @@ address & \_{}owner &  \\\hline
 
 \section{Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-mapping (address =$>$ Balance) & \_{}balances &  \\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.onTokenWalletGetBalance\\\hline
- & & used in @2.Padawan.onTokenWalletGetBalance\\\hline
- & & used in @2.Padawan.onTokenWalletGetBalance\\\hline
- & & assigned in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & assigned in @2.Padawan.depositTons\\\hline
- & & used in @2.Padawan.depositTons\\\hline
- & & assigned in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
- & & assigned in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
-mapping (address =$>$ address) & \_{}tokenAccounts &  \\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onTokenWalletDeploy\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.depositTokens\\\hline
- & & used in @2.Padawan.createTokenAccount\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
-mapping (address =$>$ ActiveProposal) & \_{}activeProposals &  \\\hline
- & & assigned in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & assigned in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.confirmVote\\\hline
-uint32 & \_{}activeProposalsLength &  \\\hline
- & & assigned in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.rejectVote\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.onEstimateVotes\\\hline
- & & used in @2.Padawan.onEstimateVotes\\\hline
-Reclaim & \_{}reclaim &  \\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & used in @2.Padawan.updateStatus\\\hline
- & & assigned in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & used in @2.Padawan.reclaimDeposit\\\hline
- & & assigned in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
- & & used in @2.Padawan.\_{}doReclaim\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=35]
     mapping(address => Balance) public _balances;
@@ -150,6 +62,9 @@ Reclaim & \_{}reclaim &  \\\hline
 
 \subsection{Modifier onlyOwner}
 
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=44]
     modifier onlyOwner() {
@@ -164,7 +79,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Constructor}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=49]
@@ -175,11 +90,11 @@ Reclaim & \_{}reclaim &  \\\hline
 
 \section{Public Method Definitions}
 
-
 \subsection{Function confirmVote}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=89]
@@ -204,7 +119,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function createTokenAccount}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=228]
@@ -221,7 +136,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function depositTokens}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=210]
@@ -241,7 +156,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function depositTons}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=204]
@@ -255,7 +170,17 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function onEstimateVotes}
 
 \begin{itemize}
-\item TODO
+\item \issueMajor{Incorrect computation in {\tt
+    Padawan.onEstimateVotes}} {The value of {\tt
+    \_activeProposalsLength} is wrong if the user sends his votes in
+  multiple batches. Indeed, if this variable measures the size of the
+  mapping {\tt \_activeProposals}, it should only be increased in the
+  case {\tt !optActiveProposal.hasValue()}. Otherwise, the value is
+  increased for every batch of votes, and only decreased when all
+  votes have been confirmed/rejected, leading to a over-estimation of
+  the number of entries in the mapping.}
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=60]
@@ -292,7 +217,15 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function onTokenWalletDeploy}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Can empty voting rights in {\tt
+    Padawan.onTokenWalletDeploy}}{An attacker could send a {\tt
+    onTokenWalletDeploy} message (faking to be a random root token
+  contract) with as argument an existing {\tt voteProvider} of the
+  user, everytime after the user called {\tt depositTokens}. As a
+  result {\tt \_balances[account]} is set to 0, emptying the voting
+  rights of the user for that {\tt voteProvider}. Fix: the contract
+  should record the deployment requests and verify that the {\tt
+    msg.sender} is one of them.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=237]
@@ -307,7 +240,12 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function onTokenWalletGetBalance}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Unbounded voting rights in {\tt
+    Padawan.onTokenWalletGetBalance}}{Because the balance is added to
+    the total ({\tt $+=$}), instead of replacing it, a malicious user
+    could keep calling {\tt depositTokens} to keep increasing his
+    total balance without sending new tokens. Fix: replace {\tt $+=$} by
+    {\tt $=$ }}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=222]
@@ -321,7 +259,18 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function reclaimDeposit}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Race condition in {\tt Padawan.reclaimDeposit}}
+  {Because {\tt locked} is only increased in {\tt
+      Padawan.confirmVote}, a malicious user could {\tt
+      reclaimDeposit} just after {\tt Padawan.onEstimateVotes} and
+    before {\tt Padawan.confirmVote}. In this case, the user can empty
+    his balance, while still participating to the vote. Slashing will
+    not be possible later if his vote was incorrect. Fix: locked
+    amount should be recomputed for every {\tt reclaimDeposit} from
+    all the active proposals.}
+
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=118]
@@ -360,7 +309,8 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function rejectVote}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=106]
@@ -380,7 +330,18 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function updateStatus}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): the test for recomputation of locked
+  amount should be {\tt ==} instead of {\tt <=} as the former
+  locked amount can never be strictly smaller than a given proposal
+  cost.
+\item Minor issue (readability): the recomputation of the locked
+  amount should be moved to an internal function, and reused in {\tt
+    reclaimDeposit} to avoid the race condition with {\tt confirmVote}
+\item Minor issue (code repetition): {\tt delete
+  \_activeProposals[msg.sender]} is in both clauses of the {\tt if}
+  and could be moved outside.
+\item Minor issue (readability): an integer is used as an error. Fix:
+  a constant should be defined instead.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=149]
@@ -426,7 +387,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function vote}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=53]
@@ -444,7 +405,7 @@ Reclaim & \_{}reclaim &  \\\hline
 \subsection{Function \_{}doReclaim}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=191]

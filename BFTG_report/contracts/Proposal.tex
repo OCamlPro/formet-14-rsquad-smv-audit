@@ -22,15 +22,9 @@ IGroupCallback & \\\hline
 
 \section{Static Variable Definitions}
 
-
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}deployer &  \\\hline
- & & used in @3.Proposal.\_{}buildPadawanState\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-uint32 & \_{}id &  \\\hline
-\end{tabular}
-\fi
+\begin{itemize}
+\item OK
+\end{itemize}
 
 
 \begin{lstlisting}[firstnumber=15]
@@ -44,92 +38,9 @@ uint32 & \_{}id &  \\\hline
 \section{Variable Definitions}
 
 
-\ifsoltables
-\noindent\begin{tabular}{|l|l|p{5cm}|}\hline
-address & \_{}client &  \\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-uint128 & \_{}votePrice &  \\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.estimateVotes\\\hline
- & & used in @3.Proposal.estimateVotes\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-uint128 & \_{}voteTotal &  \\\hline
- & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
- & & used in @3.Proposal.\_{}tryEarlyComplete\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}softMajority\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-address & \_{}voteProvider &  \\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.estimateVotes\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-address [] & \_{}whiteList &  \\\hline
- & & assigned in @3.Proposal.onGetMembers\\\hline
- & & used in @3.Proposal.onGetMembers\\\hline
- & & used in @3.Proposal.\_{}findInWhiteList\\\hline
- & & used in @3.Proposal.\_{}findInWhiteList\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-bool & \_{}openProposal & Initialized to false \\\hline
- & & used in @3.Proposal.vote\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-ProposalInfo & \_{}proposalInfo &  \\\hline
- & & assigned in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & assigned in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.vote\\\hline
- & & used in @3.Proposal.queryStatus\\\hline
- & & used in @3.Proposal.getVotingResults\\\hline
- & & used in @3.Proposal.getInfo\\\hline
- & & used in @3.Proposal.getCurrentVotes\\\hline
- & & used in @3.Proposal.getCurrentVotes\\\hline
- & & used in @3.Proposal.getAll\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}wrapUp\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.\_{}changeState\\\hline
- & & used in @3.Proposal.\_{}changeState\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-ProposalResults & \_{}results &  \\\hline
- & & used in @3.Proposal.getVotingResults\\\hline
- & & assigned in @3.Proposal.\_{}finalize\\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
-VoteCountModel & \_{}voteCountModel &  \\\hline
- & & used in @3.Proposal.\_{}finalize\\\hline
- & & assigned in @3.Proposal.:constructor\\\hline
- & & used in @3.Proposal.:constructor\\\hline
-\end{tabular}
-\fi
-
+\begin{itemize}
+\item OK
+\end{itemize}
 
 \begin{lstlisting}[firstnumber=18]
     address _client;
@@ -173,7 +84,15 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Constructor}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: there is a limitation to 16 kB for deploy
+  messages. For this constructor, the deploy message contains the code
+  of {\tt Proposal}, the title and the code of {\tt Padawan}. Thus, it
+  might become a problem in the future. There is already a mechanism
+  in the infrastructure to download codes from the {\tt
+    DemiurgeStore}, this contract should take advantage of it.
+\item Minor issue: the {\tt \_voteCountModel} variable is initialized
+  to {\tt SoftMajority} in this constructor, but it is not used
+  anywhere. Consider removing it if no future use.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=32]
@@ -225,7 +144,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function estimateVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=78]
@@ -239,7 +158,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function getAll}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=199]
@@ -251,7 +170,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function getCurrentVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=212]
@@ -263,7 +182,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function getInfo}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=208]
@@ -275,7 +194,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function getVotingResults}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=203]
@@ -288,7 +207,10 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function onGetMembers}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{No permission check on {\tt
+    Proposal.onGetMembers}}{No check is performed on the sender of
+  {\tt onGetMembers}. An attacker could use it to fill the {\tt
+    \_whiteList} variable with malicious members.}
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=220]
@@ -300,7 +222,8 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function queryStatus}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that the message
+  contains enough value to send the message.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=191]
@@ -314,8 +237,19 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function vote}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: a {\tt require} should check that the message
+  contains enough value to send back the reply;
+\item Minor issue: given that the constructor initializes {\tt
+  \_proposalInfo.start} to {\tt now}, it is impossible for this
+  function to return the {\tt VOTING\_NOT\_STARTED} error.
+\item Minor issue: the transaction could be aborted if a {\tt
+  onProposalPassed} message is sent by {\tt \_finalize} (in {\tt
+  \_wrapUp}), together with {\tt rejectVote} or {\tt confirmVote}
+  messages, because of the flag 64.  Need to test what happens if two
+  messages are sent by the same transaction, with one of them
+  containing the flag 64.
 \end{itemize}
+
 
 \begin{lstlisting}[firstnumber=84]
     function vote(address padawanOwner, bool choice, uint128 votes) external override {
@@ -350,7 +284,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function wrapUp}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=73]
@@ -366,7 +300,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}buildPadawanState}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=183]
@@ -382,7 +316,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}calculateVotes}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=161]
@@ -399,7 +333,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}changeState}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=179]
@@ -411,7 +345,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}finalize}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=112]
@@ -437,7 +371,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}findInWhiteList}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=224]
@@ -454,7 +388,7 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}getGroupMembers}
 
 \begin{itemize}
-\item TODO
+\item OK
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=233]
@@ -466,7 +400,13 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}softMajority}
 
 \begin{itemize}
-\item TODO
+\item \issueCritical{Division by 0 in {\tt
+    Proposal.\_softMajority}}{If {\tt totalVotes=1}, this function
+  fails with division by 0. Fix: the function should check that {\tt
+    totalVotes>1}, and add special cases for {\tt totalVotes=1} and
+  {\tt totalVotes=0}}
+\item Minor issue (readability): use {\tt returns (bool passed)} to
+  avoid the need to define a temporary variable and to return it.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=170]
@@ -483,7 +423,9 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}tryEarlyComplete}
 
 \begin{itemize}
-\item TODO
+\item Minor issue (readability): use {\tt returns (bool completed,
+  bool passed)} to avoid the need to define temporary variables and to
+  return them.
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=130]
@@ -506,7 +448,13 @@ VoteCountModel & \_{}voteCountModel &  \\\hline
 \subsection{Function \_{}wrapUp}
 
 \begin{itemize}
-\item TODO
+\item Minor issue: the function could immediately check if the state
+  is above {\tt Ended} to avoid recomputing again when the state
+  cannot change anymore;
+\item Minor issue: there is no need to call {\tt \_changeState} before
+  calling {\tt \_finalize}, as {\tt \_finalize} always calls {\tt
+    \_changeState} and will thus override the state written in this
+  function;
 \end{itemize}
 
 \begin{lstlisting}[firstnumber=145]
